@@ -390,6 +390,14 @@ class Player(models.Model):
     sorties_streak_current = models.IntegerField(default=0)
     sorties_streak_max = models.IntegerField(default=0)
 
+    ft_streak_current = models.IntegerField(default=0)
+    ft_streak_max = models.IntegerField(default=0)
+
+    sortie_max_ak = models.IntegerField(default=0)
+    sortie_max_gk = models.IntegerField(default=0)
+
+    lost_aircraft_current = models.IntegerField(default=0)
+
     bailout = models.IntegerField(default=0)
     wounded = models.IntegerField(default=0)
     dead = models.IntegerField(default=0)
@@ -461,6 +469,11 @@ class Player(models.Model):
 
     def get_awards_url(self):
         url = '{url}?tour={tour_id}'.format(url=reverse('stats:pilot_awards', args=[self.profile_id, self.nickname]),
+                                            tour_id=self.tour_id)
+        return url
+
+    def get_killboard_url(self):
+        url = '{url}?tour={tour_id}'.format(url=reverse('stats:pilot_killboard', args=[self.profile_id, self.nickname]),
                                             tour_id=self.tour_id)
         return url
 

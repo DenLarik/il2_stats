@@ -24,9 +24,7 @@ from stats.online import update_online, cleanup_online
 from stats.rewards import reward_sortie, reward_tour, reward_mission
 from users.utils import cleanup_registration
 
-
 User = get_user_model()
-
 
 MISSION_REPORT_BACKUP_PATH = settings.MISSION_REPORT_BACKUP_PATH
 MISSION_REPORT_BACKUP_DAYS = settings.MISSION_REPORT_BACKUP_DAYS
@@ -280,9 +278,6 @@ def stats_whore(m_report_file):
         p.save()
         reward_mission(player_mission=p)
 
-    for p in players_killboard.values():
-        p.save()
-
     for s in squads.values():
         s.save()
 
@@ -361,7 +356,12 @@ def stats_whore(m_report_file):
             else:
                 params['cact_object_id'] = objects[event['target'].log_name]['id']
 
-        LogEntry.objects.create(**params)
+        l = LogEntry.objects.create(**params)
+        if l.type == 'shotdown' and l.act_sortie and l.cact_sortie and not l.act_sortie.is_disco and not l.extra_data.get('is_friendly_fire'):
+            update_killboard_pvp(player=l.act_sortie.player, opponent=l.cact_sortie.player, players_killboard=players_killboard)
+
+    for p in players_killboard.values():
+        p.save()
 
     logger.info('{mission} - processing finished'.format(mission=m_report_file.stem))
 
@@ -439,7 +439,7 @@ def create_new_sortie(mission, profile, player, sortie, sortie_aircraft_id):
 
     killboard_pvp = defaultdict(int)
     killboard_pve = defaultdict(int)
-    # player_targets = []
+
     ak_total = 0
     fak_total = 0
     ak_assist = 0
@@ -459,9 +459,6 @@ def create_new_sortie(mission, profile, player, sortie, sortie_aircraft_id):
                     gk_total += 1
                 if target.sortie:
                     killboard_pvp[target.cls] += 1
-                    # if sortie.cls_base == 'aircraft' and target.sortie.cls_base == 'aircraft':
-                    #     opponent = players_pilots[target.sortie.account_id]
-                    #     player_targets.append(opponent)
                 else:
                     killboard_pve[target.cls] += 1
             else:
@@ -603,8 +600,8 @@ def update_sortie(new_sortie, player_mission, player_aircraft):
         player.streak_ground_current = 0
         player.score_streak_current = 0
         player.sorties_streak_current = 0
-    # elif new_sortie.is_disco:
-    #     player.streak_current = 0
+        player.ft_streak_current = 0
+        player.lost_aircraft_current = 0
     else:
         player.streak_current += new_sortie.ak_total
         player.streak_max = max(player.streak_max, player.streak_current)
@@ -614,16 +611,19 @@ def update_sortie(new_sortie, player_mission, player_aircraft):
         player.score_streak_max = max(player.score_streak_max, player.score_streak_current)
         player.sorties_streak_current += 1
         player.sorties_streak_max = max(player.sorties_streak_max, player.sorties_streak_current)
+        player.ft_streak_current += new_sortie.flight_time
+        player.ft_streak_max = max(player.ft_streak_max, player.ft_streak_current)
+        if new_sortie.is_lost_aircraft:
+            player.lost_aircraft_current += 1
+
+    player.sortie_max_ak = max(player.sortie_max_ak, new_sortie.ak_total)
+    player.sortie_max_gk = max(player.sortie_max_gk, new_sortie.gk_total)
 
     update_status(new_sortie=new_sortie, player=player)
     update_status(new_sortie=new_sortie, player=player_mission)
     update_status(new_sortie=new_sortie, player=player_aircraft)
     if player.squad:
         update_status(new_sortie=new_sortie, player=player.squad)
-
-    # for target in player_targets:
-    #     update_killboard_pvp(player=player, opponent=target, players_killboard=players_killboard)
-    #     update_elo_rating(winner=player, loser=target)
 
 
 def update_general(player, new_sortie):
