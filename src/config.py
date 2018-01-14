@@ -20,6 +20,10 @@ DEFAULT = {
     },
     'game_server': {
         'path': r'C:\Program Files (x86)\1C Game Studios\IL-2 Sturmovik Battle of Stalingrad',
+        'ip': '127.0.0.1',
+        'port': 28000,
+        'collect_stats': False,
+        'enable_restarter': False,
         # 'time_zone': 'Europe/Moscow',
         'time_zone': get_localzone().zone,
     },
@@ -75,6 +79,10 @@ DATABASES['default']['USER'] = conf['database']['user']
 DATABASES['default']['PASSWORD'] = conf['database']['password']
 
 GAME_SERVER_PATH = conf['game_server']['path']
+GAME_SERVER_IP = conf['game_server']['ip']
+GAME_SERVER_PORT = conf['game_server'].getint('port')
+GAME_SERVER_COLLECT_STATS = conf['game_server'].getboolean('collect_stats')
+GAME_SERVER_ENABLE_RESTARTER = conf['game_server'].getboolean('enable_restarter')
 
 if os.name == 'nt':
     # windows
