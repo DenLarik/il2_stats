@@ -1,5 +1,5 @@
-from src.mission_report.constants import Coalition
-from src.mission_report.statuses import LifeStatus, BotLifeStatus, SortieStatus
+from mission_report.constants import Coalition
+from mission_report.statuses import LifeStatus, BotLifeStatus, SortieStatus
 
 """
 examples:

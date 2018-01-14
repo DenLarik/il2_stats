@@ -1,21 +1,23 @@
-import operator
-import sys
-import time
+import random
 from collections import defaultdict
 from datetime import datetime, timedelta
+import operator
 from pathlib import Path
+from pprint import pprint
+import sys
 from types import MappingProxyType
 from zipfile import ZipFile, ZIP_LZMA
 
 import django
-import pytz
-from core import __version__
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import transaction
-from django.utils.crypto import random
-from mission_report.report import MissionReport
+import pytz
+import time
+
+from core import __version__
 from mission_report.statuses import LifeStatus
+from mission_report.report import MissionReport
 from stats.logger import logger
 from stats.models import (Object, Mission, Sortie, Profile, Player, PlayerAircraft, VLife,
                           PlayerMission, KillboardPvP, Tour, LogEntry, Score, Squad)
@@ -23,9 +25,9 @@ from stats.online import update_online, cleanup_online
 from stats.rewards import reward_sortie, reward_tour, reward_mission, reward_vlife
 from users.utils import cleanup_registration
 
-from src.custom.current_mission import cleanup_current_mission, update_current_mission
-from src.custom.profiles_stats import update_profile_stats
-from src.custom.restarter import check_server
+from custom.current_mission import cleanup_current_mission, update_current_mission
+from custom.profiles_stats import update_profile_stats
+from custom.restarter import check_server
 
 User = get_user_model()
 
