@@ -51,7 +51,7 @@ def get_position_by_field(player, field):
                 SELECT position
                 FROM (
                     SELECT
-                        ROW_NUMBER() OVER (ORDER BY players.{field} DESC, players.id) AS position,
+                        ROW_NUMBER() OVER (ORDER BY players.{field} DESC, players.rating DESC) AS position,
                         players.profile_id as profile_id
                     FROM players, profiles
                     WHERE
@@ -71,7 +71,7 @@ def get_position_by_field(player, field):
                 SELECT position
                 FROM (
                     SELECT
-                         ROW_NUMBER() OVER (ORDER BY players.{field} DESC, players.id) AS position,
+                         ROW_NUMBER() OVER (ORDER BY players.{field} DESC, players.rating DESC) AS position,
                          players.profile_id as profile_id
                     FROM players, profiles
                     WHERE

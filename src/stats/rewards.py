@@ -4,9 +4,9 @@ from custom import rewards
 from stats.models import Award, Reward
 
 
-_awards_tour = Award.objects.filter(type='tour')
-_awards_mission = Award.objects.filter(type='mission')
-_awards_sortie = Award.objects.filter(type='sortie')
+_awards_tour = Award.objects.filter(type='tour').order_by('id')
+_awards_mission = Award.objects.filter(type='mission').order_by('id')
+_awards_sortie = Award.objects.filter(type='sortie').order_by('id')
 _awards_vlife = Award.objects.filter(type='vlife')
 
 

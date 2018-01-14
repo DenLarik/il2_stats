@@ -1,19 +1,16 @@
 from datetime import timedelta
 
 from django.conf import settings
-from django.db.models import Q, Count, Sum
+from django.db.models import Q, Sum
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from django.utils import timezone
+from mission_report.constants import Coalition
 
-from mission_report.constants import Coalition, Country
-from squads.models import Squad as SquadProfile
-
+from . import sortie_log
 from .helpers import Paginator, get_sort_by, redirect_fix_url
 from .models import (Player, Mission, PlayerMission, PlayerAircraft, Sortie, KillboardPvP,
-                     Tour, LogEntry, Profile, Squad, Reward, PlayerOnline, VLife)
-from . import sortie_log
-
+                     Tour, LogEntry, Profile, Squad, Reward, PlayerOnline, VLife, Award, CurrentMission)
 
 INACTIVE_PLAYER_DAYS = settings.INACTIVE_PLAYER_DAYS
 ITEMS_PER_PAGE = 20
@@ -21,11 +18,11 @@ ITEMS_PER_PAGE = 20
 
 missions_sort_fields = ['id', 'pilots_total', 'winning_coalition', 'duration']
 squads_sort_fields = ['ak_total', 'gk_total', 'flight_time', 'kd', 'khr', 'score', 'rating', 'num_members']
-pilots_sort_fields = ['ak_total', 'streak_current', 'gk_total', 'flight_time', 'kd', 'khr', 'accuracy', 'score', 'rating']
+pilots_sort_fields = ['ak_total', 'streak_current', 'gk_total', 'flight_time', 'kd', 'khr', 'accuracy', 'score', 'rating', 'rank']
 killboard_sort_fields = ['won', 'lose', 'wl']
 
 
-def _get_rating_position(item, field='rating'):
+def _get_rating_position(item, field='rank_id'):
     rating_position = item.get_position_by_field(field=field)
     if rating_position:
         page_position = rating_position // ITEMS_PER_PAGE
@@ -57,11 +54,21 @@ def squad(request, squad_id, squad_tag=None):
         return redirect_fix_url(request=request, param='squad_tag', value=squad_.tag)
     # подменяем тур на случай если выдаем другой
     request.tour = squad_.tour
-    rating_position, page_position = _get_rating_position(item=squad_)
+    rating_position, page_position = _get_rating_position(item=squad_, field='rating')
+
+    if rating_position == 1:
+        if squad_.coal_pref == 1:
+            award = Award.objects.get(func='guards')
+        elif squad_.coal_pref == 2:
+            award = Award.objects.get(func='luftwaffe_badge')
+    else:
+        award = None
+
     return render(request, 'squad.html', {
         'squad': squad_,
         'rating_position': rating_position,
         'page_position': page_position,
+        'award': award,
     })
 
 
@@ -71,9 +78,19 @@ def squad_pilots(request, squad_id, squad_tag=None):
         return redirect_fix_url(request=request, param='squad_tag', value=squad_.tag)
     # подменяем тур на случай если выдаем другой
     request.tour = squad_.tour
-    sort_by = get_sort_by(request=request, sort_fields=pilots_sort_fields, default='-rating')
-    pilots = Player.players.pilots(tour_id=squad_.tour_id, squad_id=squad_.id).order_by(sort_by, 'id')
-    return render(request, 'squad_pilots.html', {'squad': squad_, 'pilots': pilots})
+    sort_by = get_sort_by(request=request, sort_fields=pilots_sort_fields, default='-rank')
+    pilots = Player.players.pilots(tour_id=squad_.tour_id, squad_id=squad_.id).order_by(sort_by, '-rating')
+
+    rating_position, page_position = _get_rating_position(item=squad_, field='rating')
+    if rating_position == 1:
+        if squad_.coal_pref == 1:
+            award = Award.objects.get(func='guards')
+        elif squad_.coal_pref == 2:
+            award = Award.objects.get(func='luftwaffe_badge')
+    else:
+        award = None
+
+    return render(request, 'squad_pilots.html', {'squad': squad_, 'pilots': pilots, 'award': award})
 
 
 def squad_rankings(request):
@@ -95,8 +112,8 @@ def squad_rankings(request):
 def pilot_rankings(request):
     page = request.GET.get('page', 1)
     search = request.GET.get('search', '').strip()
-    sort_by = get_sort_by(request=request, sort_fields=pilots_sort_fields, default='-rating')
-    players = Player.players.pilots(tour_id=request.tour.id).order_by(sort_by, 'id')
+    sort_by = get_sort_by(request=request, sort_fields=pilots_sort_fields, default='-rank')
+    players = Player.players.pilots(tour_id=request.tour.id).order_by(sort_by, '-rating')
     if search:
         players = players.search(name=search)
     else:
@@ -163,7 +180,10 @@ def pilot_awards(request, profile_id, nickname=None):
     if player.profile.is_hide:
         return render(request, 'pilot_hide.html', {'player': player})
 
-    rewards = Reward.objects.select_related('award').filter(player_id=player.id).order_by('-date')
+    if player.coal_pref != 0:
+        rewards = Reward.objects.select_related('award').filter(player_id=player.id).order_by('award_id')
+    else:
+        rewards = ()
 
     return render(request, 'pilot_awards.html', {
         'player': player,
@@ -352,6 +372,11 @@ def main(request):
     axis_online = PlayerOnline.objects.filter(coalition=Coalition.Axis).count()
     total_online = allies_online + axis_online
 
+    try:
+        current_mission = CurrentMission.objects.all()[0]
+    except IndexError:
+        current_mission = None
+
     return render(request, 'main.html', {
         'tour': request.tour,
         'missions_wins': missions_wins,
@@ -367,8 +392,18 @@ def main(request):
         'total_online': total_online,
         'allies_online': allies_online,
         'axis_online': axis_online,
+        'current_mission': current_mission
     })
 
+def current_mission(request):
+    try:
+        current_mission = CurrentMission.objects.all()[0]
+    except IndexError:
+        current_mission = None
+
+    return render_to_response('current_mission.html', {
+        'current_mission': current_mission
+    })
 
 def tour(request):
     missions_wins = request.tour.missions_wins()
