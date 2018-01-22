@@ -3,7 +3,7 @@ import re
 import time
 
 from mission_report import parse_mission_log_line
-from stats.models import  CurrentMission
+from stats.models import CurrentMission
 
 
 logger = logging.getLogger('current_mission')

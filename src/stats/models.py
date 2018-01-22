@@ -1634,7 +1634,6 @@ class Reward(models.Model):
     def __str__(self):
         return '{player} - {award}'.format(player=self.player, award=self.award)
 
-
 class PlayerOnline(models.Model):
     uuid = models.UUIDField(primary_key=True)
     nickname = models.CharField(max_length=128)

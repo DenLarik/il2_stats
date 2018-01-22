@@ -25,9 +25,9 @@ from stats.online import update_online, cleanup_online
 from stats.rewards import reward_sortie, reward_tour, reward_mission, reward_vlife
 from users.utils import cleanup_registration
 
-from custom.current_mission import cleanup_current_mission, update_current_mission
-from custom.profiles_stats import update_profile_stats
-from custom.restarter import check_server
+from stats.current_mission import cleanup_current_mission, update_current_mission
+from stats.profiles_stats import update_profile_stats
+from stats.restarter import check_server
 
 User = get_user_model()
 
