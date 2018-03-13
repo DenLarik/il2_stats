@@ -4,6 +4,7 @@ import hashlib
 
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField, JSONField
+from django.templatetags.static import static
 from django.db import connection, models
 from django.db.models import Avg, Count, Sum, Max
 from django.urls import reverse, reverse_lazy
@@ -129,6 +130,9 @@ class Object(models.Model):
 
     def __str__(self):
         return self.name
+
+    def aircraft_image(self):
+        return static('img/aircraft/{log_name}.png'.format(log_name=self.log_name))
 
 
 class Tour(models.Model):
