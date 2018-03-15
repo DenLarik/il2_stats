@@ -39,8 +39,15 @@ aircraft_gunner,BotGunner_He111H16fwd,1,Aircraft gunner,стрелок
 aircraft_gunner,BotGunner_He111H16fwdM,1,Aircraft gunner,стрелок
 aircraft_gunner,BotGunner_He111H16rearM,1,Aircraft gunner,стрелок
 aircraft_gunner,BotGunner_Il2m42,1,Aircraft gunner,стрелок
+aircraft_gunner,BotGunner_Il2m43,1,Aircraft gunner,стрелок
 aircraft_gunner,BotGunner_A20Bbtm,1,Aircraft gunner,стрелок
 aircraft_gunner,BotGunner_A20Btop,1,Aircraft gunner,стрелок
+aircraft_gunner,BotGunner_Pe2s87rear,1,Aircraft gunner,стрелок
+aircraft_gunner,BotGunner_He111H16side,1,Aircraft gunner,стрелок
+aircraft_gunner,BotGunner_Pe2s35rear,1,Aircraft gunner,стрелок
+aircraft_gunner,BotGunner_Pe2s35top,1,Aircraft gunner,стрелок
+aircraft_gunner,BotGunner_Pe2s87top,1,Aircraft gunner,стрелок
+aircraft_gunner,BotGunner_Pe2s87topM,1,Aircraft gunner,стрелок
 aircraft_heavy,He 111 H-6,1,,
 aircraft_heavy,He 111 H-16,1,,
 aircraft_heavy,Ju 88 A-4,1,,
