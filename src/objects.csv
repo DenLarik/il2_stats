@@ -156,8 +156,8 @@ aircraft_turret,Turret_Pe2s87_1,1,Pe-2 (series 87) turret,турель Пе-2 87
 aircraft_turret,Turret_Pe2s87_1M,1,Pe-2 (series 87) turret,турель Пе-2 87-й серии
 aircraft_turret,Turret_Pe2s87_2,1,Pe-2 (series 87) turret,турель Пе-2 87-й серии
 aircraft_turret,Turret_Il2m43,1,IL-2 AM-38F turret,турель Ил-2 АМ-38Ф
-aircraft_turret,Turret_A20B_1,0,A-20B turret,турель A-20B
-aircraft_turret,Turret_A20B_2,0,A-20B turret,турель A-20B
+aircraft_turret,Turret_A20B_1,1,A-20B turret,турель A-20B
+aircraft_turret,Turret_A20B_2,1,A-20B turret,турель A-20B
 airfield,arf_ammo_1,0,airfield ammo dump,аэродромный склад вооружения
 airfield,arf_ammo_2,0,airfield ammo dump,аэродромный склад вооружения
 airfield,arf_ammo_3,0,airfield ammo dump,аэродромный склад вооружения
