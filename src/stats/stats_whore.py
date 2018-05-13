@@ -597,9 +597,9 @@ def create_new_sortie(mission, profile, player, sortie, sortie_aircraft_id):
 
     # возможность избежать плена
     if new_sortie.is_captured:
-        limit = 3
+        limit = 4
         if player.is_officer():
-            limit += 1
+            limit += 2
 
         random_number = random.randint(1, 10)
         if random_number < limit:
@@ -631,6 +631,7 @@ def update_sortie(new_sortie, player_mission, player_aircraft, vlife):
         player_aircraft.disco += 1
         player.streak_current = 0
         vlife.disco += 1
+        vlife.relive = 1
         return
     # если вылет игнорируется по каким либо причинам
     elif new_sortie.is_ignored:
