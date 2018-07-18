@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^vlife/(?P<vlife_id>\d+)/$', views.pilot_vlife, name='pilot_vlife'),
 
     url(r'^online/$', views.online, name='online'),
+    url(r'^current_mission/$', views.current_mission, name='current_mission'),
     url(r'^$', views.main, name='main'),
 
     # нужно чтобы работали url без имени

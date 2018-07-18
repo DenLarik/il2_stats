@@ -51,7 +51,7 @@ class MissionReport:
         self.active_sorties = defaultdict(set)
         self.lines = []
         self.winning_coal_id = None
-        # self.online_uuid = set()
+        self.winning_coal_type = None
         self.log_entries = []
 
         # словари вылетов для которых не нашлось объекта - поздняя инициализация
@@ -282,6 +282,67 @@ class MissionReport:
         if task_type_id == 0 and coal_id != 0 and success:
             if not self.winning_coal_id:
                 self.winning_coal_id = coal_id
+                self.winning_coal_type = 0
+        elif task_type_id == 1 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 1
+        elif task_type_id == 2 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 2
+        elif task_type_id == 3 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 3
+        elif task_type_id == 4 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 4
+        elif task_type_id == 5 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 5
+        elif task_type_id == 6 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 6
+        elif task_type_id == 7 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 7
+        elif task_type_id == 8 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 8
+        elif task_type_id == 9 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 9
+        elif task_type_id == 10 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 10
+        elif task_type_id == 11 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 11
+        elif task_type_id == 12 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 12
+        elif task_type_id == 13 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 13
+        elif task_type_id == 14 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 14
+        elif task_type_id == 15 and coal_id != 0 and success:
+            if not self.winning_coal_id:
+                self.winning_coal_id = coal_id
+                self.winning_coal_type = 15
 
     def event_airfield(self, tik, airfield_id, country_id, coal_id, aircraft_id_list, pos):
         if airfield_id in self.airfields:

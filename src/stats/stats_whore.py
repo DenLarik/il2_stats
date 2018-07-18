@@ -1,3 +1,4 @@
+import random
 from collections import defaultdict
 from datetime import datetime, timedelta
 import operator
@@ -24,6 +25,10 @@ from stats.online import update_online, cleanup_online
 from stats.rewards import reward_sortie, reward_tour, reward_mission, reward_vlife
 from users.utils import cleanup_registration
 
+from stats.current_mission import cleanup_current_mission, update_current_mission
+from stats.profiles_stats import update_profile_stats
+from stats.restarter import check_server
+
 User = get_user_model()
 
 MISSION_REPORT_BACKUP_PATH = settings.MISSION_REPORT_BACKUP_PATH
@@ -48,6 +53,8 @@ def main():
 
     waiting_new_report = False
     online_timestamp = 0
+    server_failure_timestamp = 0
+    connected = []
 
     while True:
         new_reports = []
@@ -60,19 +67,26 @@ def main():
             # обрабатываем все логи кроме последней миссии
             for m_report_file in new_reports[:-1]:
                 stats_whore(m_report_file=m_report_file)
+                connected = []
                 cleanup(m_report_file=m_report_file)
                 processed_reports.append(m_report_file.name)
+                server_failure_timestamp = 0
             continue
         elif len(new_reports) == 1:
             m_report_file = new_reports[0]
             m_report_files = collect_mission_reports(m_report_file=m_report_file)
             online_timestamp = update_online(m_report_files=m_report_files, online_timestamp=online_timestamp)
+            update_current_mission(m_report_files)
+            if settings.GAME_SERVER_COLLECT_STATS:
+                connected = update_profile_stats(m_report_files=m_report_files, prev_connected=connected)
             # если последний файл был создан более 2х минут назад - обрабатываем его
             if time.time() - m_report_files[-1].stat().st_mtime > 120:
                 waiting_new_report = False
                 stats_whore(m_report_file=m_report_file)
+                connected = []
                 cleanup(m_report_file=m_report_file)
                 processed_reports.append(m_report_file.name)
+                server_failure_timestamp = 0
                 continue
 
         if not waiting_new_report:
@@ -84,6 +98,8 @@ def main():
 
         # в идеале новые логи появляются как минимум раз в 30 секунд
         time.sleep(30)
+        if settings.GAME_SERVER_ENABLE_RESTARTER:
+            server_failure_timestamp = check_server(server_failure_timestamp)
 
 
 def backup_log(name, lines, date):
@@ -106,6 +122,7 @@ def collect_mission_reports(m_report_file):
 
 def cleanup(m_report_file=None):
     cleanup_online()
+    cleanup_current_mission()
 
     if m_report_file and MISSION_REPORT_DELETE:
         m_report_files = collect_mission_reports(m_report_file=m_report_file)
@@ -162,7 +179,10 @@ def stats_whore(m_report_file):
 
     if not m_report.is_correctly_completed:
         logger.info('{mission} - mission has not been completed correctly'.format(mission=m_report_file.stem))
-
+    if m_report.tik_last // 50 < 1800:
+        logger.info('{mission} - the mission duration is less than five minutes'.format(mission=m_report_file.stem))
+        logger.info('{mission} - mission will not be added to the database'.format(mission=m_report_file.stem))
+        return
     tour = get_tour(date=real_date)
 
     mission = Mission.objects.create(
@@ -180,7 +200,38 @@ def stats_whore(m_report_file):
     )
     if m_report.winning_coal_id:
         mission.winning_coalition = m_report.winning_coal_id
-        mission.win_reason = 'task'
+        if m_report.winning_coal_type == 0:
+            mission.win_reason = 'task'
+        elif m_report.winning_coal_type == 1:
+            mission.win_reason = 'task1'
+        elif m_report.winning_coal_type == 2:
+            mission.win_reason = 'task2'
+        elif m_report.winning_coal_type == 3:
+            mission.win_reason = 'task3'
+        elif m_report.winning_coal_type == 4:
+            mission.win_reason = 'task4'
+        elif m_report.winning_coal_type == 5:
+            mission.win_reason = 'task5'
+        elif m_report.winning_coal_type == 6:
+            mission.win_reason = 'task6'
+        elif m_report.winning_coal_type == 7:
+            mission.win_reason = 'task7'
+        elif m_report.winning_coal_type == 8:
+            mission.win_reason = 'task8'
+        elif m_report.winning_coal_type == 9:
+            mission.win_reason = 'task9'
+        elif m_report.winning_coal_type == 10:
+            mission.win_reason = 'task10'
+        elif m_report.winning_coal_type == 11:
+            mission.win_reason = 'task11'
+        elif m_report.winning_coal_type == 12:
+            mission.win_reason = 'task12'
+        elif m_report.winning_coal_type == 13:
+            mission.win_reason = 'task13'
+        elif m_report.winning_coal_type == 14:
+            mission.win_reason = 'task14'
+        elif m_report.winning_coal_type == 15:
+            mission.win_reason = 'task15'
         mission.save()
 
     # собираем/создаем профили игроков и сквадов
@@ -270,6 +321,8 @@ def stats_whore(m_report_file):
         p.save()
 
     for p in players_pilots.values():
+        p.update_coal_pref()
+        p.rank = p.calculate_rank()
         p.save()
         reward_tour(player=p)
 
@@ -542,6 +595,19 @@ def create_new_sortie(mission, profile, player, sortie, sortie_aircraft_id):
         is_ignored=is_ignored,
     )
 
+    # возможность избежать плена
+    if new_sortie.is_captured:
+        limit = 4
+        if player.is_officer():
+            limit += 2
+
+        random_number = random.randint(1, 10)
+        if random_number < limit:
+            new_sortie.is_captured = False
+            new_sortie.is_escaped = True
+        else:
+            new_sortie.is_escaped = False
+
     return new_sortie
 
 
@@ -563,7 +629,9 @@ def update_sortie(new_sortie, player_mission, player_aircraft, vlife):
         player.disco += 1
         player_mission.disco += 1
         player_aircraft.disco += 1
+        player.streak_current = 0
         vlife.disco += 1
+        vlife.relive = 1
         return
     # если вылет игнорируется по каким либо причинам
     elif new_sortie.is_ignored:
@@ -644,6 +712,18 @@ def update_sortie(new_sortie, player_mission, player_aircraft, vlife):
         player.ft_streak_current = 0
         player.lost_aircraft_current = 0
     else:
+        player.streak_current += new_sortie.ak_total
+        player.streak_max = max(player.streak_max, player.streak_current)
+        player.streak_ground_current += new_sortie.gk_total
+        player.streak_ground_max = max(player.streak_ground_max, player.streak_ground_current)
+        player.score_streak_current += new_sortie.score
+        # Крылья Онлайн: боевой стрик
+        if new_sortie.score > 0:
+            player.score_streak_max = max(player.score_streak_max, player.score_streak_current)
+            player.sorties_streak_current += 1
+        player.sorties_streak_max = max(player.sorties_streak_max, player.sorties_streak_current)
+        player.ft_streak_current += new_sortie.flight_time
+        player.ft_streak_max = max(player.ft_streak_max, player.ft_streak_current)
         if new_sortie.is_lost_aircraft:
             player.lost_aircraft_current += 1
 
@@ -778,28 +858,43 @@ def update_fairplay(new_sortie):
 
 
 def update_bonus_score(new_sortie):
-    # бонус процент
-    bonus_pct = 0
-    bonus_dict = {}
+    # Крылья Онлайн: Анти-Дринкинс
+    if new_sortie.is_relive:
+        new_sortie.score = 0
+    else:
+        # бонус процент
+        bonus_pct = 0
+        bonus_dict = {}
+        # бонусы получают только "честные" игроки
+        if new_sortie.fairplay == 100:
+            if new_sortie.is_landed:
+                bonus_pct += 100
+                bonus_dict['landed'] = 100
+            if new_sortie.coalition == new_sortie.mission.winning_coalition:
+                bonus_pct += 25
+                bonus_dict['winning_coalition'] = 25
+        bonus_dict['total'] = bonus_pct
 
-    # бонусы получают только "честные" игроки
-    if new_sortie.fairplay == 100:
-        if new_sortie.is_landed:
-            bonus_pct += 25
-            bonus_dict['landed'] = 25
-        if new_sortie.coalition == new_sortie.mission.winning_coalition:
-            bonus_pct += 25
-            bonus_dict['winning_coalition'] = 25
-    bonus_dict['total'] = bonus_pct
+        # ставим базовые очки т.к. функция может вызваться несколько раз
+        new_sortie.score = new_sortie.score_dict['basic']
 
-    # ставим базовые очки т.к. функция может вызваться несколько раз
-    new_sortie.score = new_sortie.score_dict['basic']
+        sortie_penalty_pct = 0
+        if new_sortie.is_bailout:
+            sortie_penalty_pct += 50
+        elif new_sortie.is_ditched:
+            sortie_penalty_pct += 20
+        elif new_sortie.is_crashed and not (new_sortie.is_captured or new_sortie.is_dead):
+            sortie_penalty_pct += 20
+        elif new_sortie.is_shotdown and not (new_sortie.is_captured or new_sortie.is_dead):
+            sortie_penalty_pct += 20
 
-    new_sortie.bonus = bonus_dict
-    bonus_score = new_sortie.score * bonus_pct // 100
-    new_sortie.score_dict['bonus'] = bonus_score
-    new_sortie.score += bonus_score
-    penalty_score = new_sortie.score * (100 - new_sortie.fairplay) // 100
-    new_sortie.score_dict['penalty'] = penalty_score
-    new_sortie.score -= penalty_score
-    # new_sortie.save()
+        sortie_penalty_score = new_sortie.score * sortie_penalty_pct // 100
+        new_sortie.score -= sortie_penalty_score
+
+        new_sortie.bonus = bonus_dict
+        bonus_score = new_sortie.score * bonus_pct // 100
+        new_sortie.score_dict['bonus'] = bonus_score
+        new_sortie.score += bonus_score
+        penalty_score = new_sortie.score * (100 - new_sortie.fairplay) // 100
+        new_sortie.score_dict['penalty'] = penalty_score
+        new_sortie.score -= penalty_score
