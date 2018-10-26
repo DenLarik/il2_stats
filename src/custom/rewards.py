@@ -369,11 +369,10 @@ def iron_cross_2nd_class(player_mission):
         return player_mission.get_mission_combat_sorties() >= 3 and player_mission.score >= 1000
 
 
-# б/у Медаль "За летные заслуги" (Италия) - условия как у медали "За боевые заслуги"
 # Знак пилота
 def aeronautical_medal(player):
     if player.coal_pref == Coalition.Axis:
-        return player.sorties_streak_current >= 5 and player.score_streak_current >= 200
+        return player.sorties_streak_current >= 2 and player.score_streak_current >= 200
 
 
 # Медаль "За зимнюю кампанию на Востоке 1941/42" - условия как у медали "За победу над Германией"
