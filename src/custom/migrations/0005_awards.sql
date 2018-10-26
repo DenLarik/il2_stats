@@ -29,10 +29,10 @@ UPDATE awards
 SET img = 'awards/allies/order_glory1.png'
 WHERE func LIKE 'order_of_glory_1st_class';
 UPDATE awards
-SET img = 'awards/allies/order_glory1.png'
+SET img = 'awards/allies/order_glory2.png'
 WHERE func LIKE 'order_of_glory_2nd_class';
 UPDATE awards
-SET img = 'awards/allies/order_glory1.png'
+SET img = 'awards/allies/order_glory3.png'
 WHERE func LIKE 'order_of_glory_3rd_class';
 UPDATE awards
 SET img = 'awards/allies/medal_bravery.png'
@@ -50,10 +50,14 @@ SET img      = 'awards/axis/guard.png',
     title_de = 'Flieger-Erinnerungsabzeichen',
     title_en = 'Flieger-Erinnerungsabzeichen',
     title_fr = 'Flieger-Erinnerungsabzeichen',
-    "desc"     = 'Почётный лётный знак (нем. Flieger-Erinnerungsabzeichen) — немецкая награда в виде нагрудного знака, которой награждались отставные и продолжающие службу летчики, участники Первой мировой войны или прослужившие в Люфтваффе не менее 15 лет или получившие ранение в ходе боевых действий.\nЛучший скавд',
-    desc_de  = 'Das Flieger-Erinnerungsabzeichen (auch: Preußisches Fliegerdienst-Erinnerungsabzeichen) wurde am 27. Januar 1914 durch Kaiser und König Wilhelm II. gestiftet. Ausgezeichnet werden sollten Offiziere, Unteroffiziere und Mannschaften, die im Falle einer Mobilmachung nicht mehr berücksichtigt und nicht mehr für den Einsatz vorgesehen waren. Nach dem Krieg erhielten ehemalige Flugzeugführer das Erinnerungsabzeichen.\nTop squad',
-    desc_en  = 'Das Flieger-Erinnerungsabzeichen (auch: Preußisches Fliegerdienst-Erinnerungsabzeichen) wurde am 27. Januar 1914 durch Kaiser und König Wilhelm II. gestiftet. Ausgezeichnet werden sollten Offiziere, Unteroffiziere und Mannschaften, die im Falle einer Mobilmachung nicht mehr berücksichtigt und nicht mehr für den Einsatz vorgesehen waren. Nach dem Krieg erhielten ehemalige Flugzeugführer das Erinnerungsabzeichen.\nTop squad',
-    desc_fr  = 'Das Flieger-Erinnerungsabzeichen (auch: Preußisches Fliegerdienst-Erinnerungsabzeichen) wurde am 27. Januar 1914 durch Kaiser und König Wilhelm II. gestiftet. Ausgezeichnet werden sollten Offiziere, Unteroffiziere und Mannschaften, die im Falle einer Mobilmachung nicht mehr berücksichtigt und nicht mehr für den Einsatz vorgesehen waren. Nach dem Krieg erhielten ehemalige Flugzeugführer das Erinnerungsabzeichen.\nTop squad'
+    "desc"     = 'Почётный лётный знак (нем. Flieger-Erinnerungsabzeichen) — немецкая награда в виде нагрудного знака, которой награждались отставные и продолжающие службу летчики, участники Первой мировой войны или прослужившие в Люфтваффе не менее 15 лет или получившие ранение в ходе боевых действий.
+Лучший скавд',
+    desc_de  = 'Das Flieger-Erinnerungsabzeichen (auch: Preußisches Fliegerdienst-Erinnerungsabzeichen) wurde am 27. Januar 1914 durch Kaiser und König Wilhelm II. gestiftet. Ausgezeichnet werden sollten Offiziere, Unteroffiziere und Mannschaften, die im Falle einer Mobilmachung nicht mehr berücksichtigt und nicht mehr für den Einsatz vorgesehen waren. Nach dem Krieg erhielten ehemalige Flugzeugführer das Erinnerungsabzeichen.
+Top squad',
+    desc_en  = 'Das Flieger-Erinnerungsabzeichen (auch: Preußisches Fliegerdienst-Erinnerungsabzeichen) wurde am 27. Januar 1914 durch Kaiser und König Wilhelm II. gestiftet. Ausgezeichnet werden sollten Offiziere, Unteroffiziere und Mannschaften, die im Falle einer Mobilmachung nicht mehr berücksichtigt und nicht mehr für den Einsatz vorgesehen waren. Nach dem Krieg erhielten ehemalige Flugzeugführer das Erinnerungsabzeichen.
+Top squad',
+    desc_fr  = 'Das Flieger-Erinnerungsabzeichen (auch: Preußisches Fliegerdienst-Erinnerungsabzeichen) wurde am 27. Januar 1914 durch Kaiser und König Wilhelm II. gestiftet. Ausgezeichnet werden sollten Offiziere, Unteroffiziere und Mannschaften, die im Falle einer Mobilmachung nicht mehr berücksichtigt und nicht mehr für den Einsatz vorgesehen waren. Nach dem Krieg erhielten ehemalige Flugzeugführer das Erinnerungsabzeichen.
+Top squad'
 WHERE func LIKE 'luftwaffe_badge';
 UPDATE awards
 SET img = 'awards/axis/401.png'
@@ -124,7 +128,8 @@ SET img      = 'awards/axis/503.png',
     desc_en  = 'Flugzeugführerabzeichen bezeichnet die Ehren- oder Tätigkeitsabzeichen der Luftstreitkräfte, die einen Flugzeugführer (ggf. ehrenhalber) auszeichnet.',
     desc_de  = 'Flugzeugführerabzeichen bezeichnet die Ehren- oder Tätigkeitsabzeichen der Luftstreitkräfte, die einen Flugzeugführer (ggf. ehrenhalber) auszeichnet.',
     desc_fr  = 'Flugzeugführerabzeichen bezeichnet die Ehren- oder Tätigkeitsabzeichen der Luftstreitkräfte, die einen Flugzeugführer (ggf. ehrenhalber) auszeichnet.',
-    desc_ru  = 'Награждались летчики (пилоты) авиационных школ успешно окончившие курсы по обучению (около 100—140 часов налёта за 6-9 месяцев обучения)\nСтрик больше или равен 2, набрать не менее 200 очков'
+    desc_ru  = 'Награждались летчики (пилоты) авиационных школ успешно окончившие курсы по обучению (около 100—140 часов налёта за 6-9 месяцев обучения)
+Стрик больше или равен 2, набрать не менее 200 очков'
 WHERE id = 503;
 UPDATE awards
 SET img = 'awards/axis/531.png'
