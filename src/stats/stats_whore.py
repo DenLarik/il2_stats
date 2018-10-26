@@ -718,9 +718,9 @@ def update_sortie(new_sortie, player_mission, player_aircraft, vlife):
         player.streak_ground_max = max(player.streak_ground_max, player.streak_ground_current)
         player.score_streak_current += new_sortie.score
         # Крылья Онлайн: боевой стрик
-        if new_sortie.score > 0:
-            player.score_streak_max = max(player.score_streak_max, player.score_streak_current)
-            player.sorties_streak_current += 1
+        # if new_sortie.score > 0:
+        #     player.score_streak_max = max(player.score_streak_max, player.score_streak_current)
+        #     player.sorties_streak_current += 1
         player.sorties_streak_max = max(player.sorties_streak_max, player.sorties_streak_current)
         player.ft_streak_current += new_sortie.flight_time
         player.ft_streak_max = max(player.ft_streak_max, player.ft_streak_current)
