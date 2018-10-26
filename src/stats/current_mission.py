@@ -33,7 +33,7 @@ def update_current_mission(m_report_files):
 
             if atype_id == 0:
                 mission = 'Unknown'
-                m = re.match(r".+\\(?P<mission>.+)[-_]WL[-_]\d+[-_]\w+.msnbin", data['file_path'], re.IGNORECASE)            
+                m = re.match(r".+\\(?P<mission>.+)[-_]WL[-_]\w+[-_].*", data['file_path'], re.IGNORECASE)
                 if m:
                     mission = m.group('mission')
                 CurrentMission.objects.update_or_create(name=mission, duration=0)
