@@ -3,18 +3,18 @@
 {% if current_mission %}
 <div class="online_widget" id="current_mission">
     <div class="total">
-       {% trans 'current mission' %}
+        {% trans 'current mission' %}
     </div>
     <div class="total_num">
         {{ current_mission }}
     </div>
     <div class="total">
-       {% trans 'duration' %}
+        {% trans 'time left' %}
     </div>
     <div class="total_num" id="duration">
-        {{ current_mission.duration|seconds_to_time }}
+        {{ current_mission.estimate|seconds_to_time }}
     </div>
 
     <div class="clearfix"></div>
-</div> 
+</div>
 {% endif %}

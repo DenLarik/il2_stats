@@ -247,6 +247,7 @@ class Tour(models.Model):
         if prev_tour:
             return prev_tour
 
+
 class Mission(models.Model):
     tour = models.ForeignKey(Tour, related_name='missions', on_delete=models.CASCADE)
 
@@ -620,7 +621,8 @@ class Player(models.Model):
         if self.coal_pref > 0:
             rank_id = Rank.objects.filter(min_flight_hours__lte=self.flight_time_hours,
                                           min_rating__lte=self.rating,
-                                          min_rating_position__gt=self.get_position_by_field(field='rating')).aggregate(Max('id'))['id__max']
+                                          min_rating_position__gt=self.get_position_by_field(field='rating')).aggregate(
+                Max('id'))['id__max']
 
             if rank_id == 11 and not self.is_general():
                 rank_id = rank_id - 1
@@ -665,12 +667,14 @@ class Player(models.Model):
 
     # Крылья Онлайн: пилот с лучшим стриком
     def is_top_streak(self):
-        top_fighter = (Player.objects.filter(coal_pref=self.coal_pref, tour_id=self.tour.id).order_by('-streak_current')[0])
+        top_fighter = (
+            Player.objects.filter(coal_pref=self.coal_pref, tour_id=self.tour.id).order_by('-streak_current')[0])
         return top_fighter.streak_current == self.streak_current
 
     # Крылья Онлайн: пилот с лучшим стриком по нц
     def is_top_ground_streak(self):
-        top_bomber = (Player.objects.filter(coal_pref=self.coal_pref, tour_id=self.tour.id).order_by('-streak_ground_current')[0])
+        top_bomber = (
+            Player.objects.filter(coal_pref=self.coal_pref, tour_id=self.tour.id).order_by('-streak_ground_current')[0])
         return top_bomber.streak_ground_current == self.streak_ground_current
 
     # Крылья Онлайн: проверка существующего награждения с датой
@@ -744,7 +748,12 @@ class Player(models.Model):
 
     # Крылья Онлайн: Рыцарский крест
     def is_knight(self):
-        return self.is_rewarded('knights_cross') or self.is_rewarded('knights_cross_leaves') or self.is_rewarded('knights_cross_leaves_swords') or self.is_rewarded('knights_cross_leaves_swords_diamonds') or self.is_rewarded('knights_cross_leaves_swords_diamonds_gold') or self.is_rewarded('knights_cross_leaves_swords_diamonds_gold_ground')
+        return (self.is_rewarded('knights_cross')
+                or self.is_rewarded('knights_cross_leaves')
+                or self.is_rewarded('knights_cross_leaves_swords')
+                or self.is_rewarded('knights_cross_leaves_swords_diamonds')
+                or self.is_rewarded('knights_cross_leaves_swords_diamonds_gold')
+                or self.is_rewarded('knights_cross_leaves_swords_diamonds_gold_ground'))
 
 
 class PlayerMission(models.Model):
@@ -858,7 +867,7 @@ class PlayerMission(models.Model):
 
     def update_ratio(self):
         ratio = (Sortie.objects.filter(player_id=self.id, mission_id=self.mission_id)
-                 .aggregate(ratio=Avg('ratio'))['ratio'])
+            .aggregate(ratio=Avg('ratio'))['ratio'])
         if ratio:
             self.ratio = round(ratio, 2)
 
@@ -975,7 +984,7 @@ class PlayerAircraft(models.Model):
 
     def update_ratio(self):
         ratio = (Sortie.objects.filter(player_id=self.id, aircraft_id=self.aircraft_id)
-                 .aggregate(ratio=Avg('ratio'))['ratio'])
+            .aggregate(ratio=Avg('ratio'))['ratio'])
         if ratio:
             self.ratio = round(ratio, 2)
 
@@ -1167,7 +1176,7 @@ class VLife(models.Model):
 
     def update_ratio(self):
         ratio = (Sortie.objects.filter(player_id=self.id, vlife_id=self.id)
-                 .aggregate(ratio=Avg('ratio'))['ratio'])
+            .aggregate(ratio=Avg('ratio'))['ratio'])
         if ratio:
             self.ratio = round(ratio, 2)
 
@@ -1638,6 +1647,7 @@ class Reward(models.Model):
     def __str__(self):
         return '{player} - {award}'.format(player=self.player, award=self.award)
 
+
 class PlayerOnline(models.Model):
     uuid = models.UUIDField(primary_key=True)
     nickname = models.CharField(max_length=128)
@@ -1657,6 +1667,7 @@ class PlayerOnline(models.Model):
     def __str__(self):
         return '{nickname} online'.format(nickname=self.nickname)
 
+
 # Крылья Онлайн: текущая карта
 class CurrentMission(models.Model):
     name = models.CharField(max_length=128, primary_key=True)
@@ -1668,6 +1679,11 @@ class CurrentMission(models.Model):
 
     def __str__(self):
         return '{name}'.format(name=self.name)
+
+    @property
+    def estimate(self):
+        return 10800 - self.duration
+
 
 # Крылья Онлайн: статистика пользователей
 class ProfileStats(models.Model):

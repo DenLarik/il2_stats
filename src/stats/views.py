@@ -395,15 +395,17 @@ def main(request):
         'current_mission': current_mission
     })
 
+
 def current_mission(request):
     try:
-        current_mission = CurrentMission.objects.all()[0]
+        current = CurrentMission.objects.all()[0]
     except IndexError:
-        current_mission = None
+        current = None
 
     return render_to_response('current_mission.html', {
-        'current_mission': current_mission
+        'current_mission': current
     })
+
 
 def tour(request):
     missions_wins = request.tour.missions_wins()

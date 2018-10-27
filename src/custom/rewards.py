@@ -85,11 +85,20 @@ def guards(player):
 #           Высшее отличие
 #
 # Трижды Герой Советского Союза:
+# - лучший стрик сбитых
+def gold_star_3rd(player):
+    if player.is_top_streak() and not player.is_rewarded('gold_star_3rd'):
+        player.delete_rating_reward('gold_star_3rd')
+        if player.is_rewarded('gold_star_2nd') and not player.is_rewarded('gold_star_3rd_ground'):
+            return True
+    elif not player.is_top_streak() and player.is_rewarded('gold_star_3rd'):
+        player.delete_rating_reward('gold_star_3rd')
+
+
+# Трижды Герой Советского Союза:
 # - лучший стрик по нц
 def gold_star_3rd_ground(player):
-    if (player.is_top_ground_streak()
-            and not player.is_rewarded('gold_star_3rd_ground')
-            and player.coal_pref == Coalition.Allies):
+    if player.is_top_ground_streak() and not player.is_rewarded('gold_star_3rd_ground'):
         player.delete_rating_reward('gold_star_3rd_ground')
         if player.is_rewarded('gold_star_2nd') and not player.is_rewarded('gold_star_3rd'):
             return True
