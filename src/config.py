@@ -19,7 +19,7 @@ DEFAULT = {
         'password': 'password',
     },
     'game_server': {
-        'path': r'C:\Program Files (x86)\1C Game Studios\IL-2 Sturmovik Battle of Stalingrad',
+        'path': r'G:\1C\IL-2',
         'ip': '127.0.0.1',
         'port': 28000,
         'collect_stats': False,
@@ -66,6 +66,7 @@ def get_conf():
         text_log_folder = startup_cfg['KEY = system'].get('text_log_folder', '').replace('"', '')
         conf['stats']['mission_report_path'] = text_log_folder
     return conf
+
 
 conf = get_conf()
 

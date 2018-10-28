@@ -67,9 +67,9 @@ def main():
             # обрабатываем все логи кроме последней миссии
             for m_report_file in new_reports[:-1]:
                 stats_whore(m_report_file=m_report_file)
-                connected = []
                 cleanup(m_report_file=m_report_file)
                 processed_reports.append(m_report_file.name)
+                connected = []
                 server_failure_timestamp = 0
             continue
         elif len(new_reports) == 1:
@@ -83,9 +83,9 @@ def main():
             if time.time() - m_report_files[-1].stat().st_mtime > 120:
                 waiting_new_report = False
                 stats_whore(m_report_file=m_report_file)
-                connected = []
                 cleanup(m_report_file=m_report_file)
                 processed_reports.append(m_report_file.name)
+                connected = []
                 server_failure_timestamp = 0
                 continue
 

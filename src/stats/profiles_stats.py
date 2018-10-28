@@ -1,6 +1,6 @@
 import re
-import subprocess 
-import shlex 
+import subprocess
+import shlex
 import time
 
 from django.conf import settings
@@ -14,18 +14,20 @@ USER_DISCONNECTED = 2
 SERVER_IP = settings.GAME_SERVER_IP
 SERVER_PORT = settings.GAME_SERVER_PORT
 
+
 # Крылья Онлайн: список активных соединений
 def get_stats(server_ip, server_port):
     ips = []
 
-    netstat = subprocess.Popen(shlex.split('netstat -an -p TCP'), stdout=subprocess.PIPE)    
+    netstat = subprocess.Popen(shlex.split('netstat -an -p TCP'), stdout=subprocess.PIPE)
     grep_established = subprocess.Popen(shlex.split('grep ESTABLISHED'), stdin=netstat.stdout, stdout=subprocess.PIPE)
-    grep_ip = subprocess.Popen(shlex.split("grep %s:%s" % (server_ip, server_port)), stdin=grep_established.stdout, stdout=subprocess.PIPE)
+    grep_ip = subprocess.Popen(shlex.split("grep %s:%s" % (server_ip, server_port)), stdin=grep_established.stdout,
+                               stdout=subprocess.PIPE)
 
     while True:
         output = grep_ip.stdout.readline().decode("utf-8")
         if output != '':
-            m = re.match(r"\s+TCP\s+[\d\.:]+\s+(?P<ip>[\d\.]+):", output, re.IGNORECASE)            
+            m = re.match(r"\s+TCP\s+[\d\.:]+\s+(?P<ip>[\d\.]+):", output, re.IGNORECASE)
             if m:
                 ip = m.group('ip')
                 ips.append(ip)
@@ -33,6 +35,7 @@ def get_stats(server_ip, server_port):
             break
 
     return ips
+
 
 # Крылья Онлайн: cравнение двух списков, list1 - список для проверки
 def compare_lists(list1, list2):
@@ -44,17 +47,20 @@ def compare_lists(list1, list2):
 
     return diff_elements
 
+
 # Крылья Онлайн: профайл игрока
 def get_profile_id(uuid):
     try:
-       profile = Profile.objects.get(uuid=uuid)
+        profile = Profile.objects.get(uuid=uuid)
     except Profile.DoesNotExist:
-       profile = None
+        profile = None
 
     if profile:
         return profile.id
 
+
 def update_profile_stats(m_report_files, prev_connected):
+    logger.warning('execute update_profile_stats')
     connected = get_stats(SERVER_IP, SERVER_PORT)
     new_logged_connects = []
     new_logged_disconnects = []
@@ -85,10 +91,18 @@ def update_profile_stats(m_report_files, prev_connected):
 
         new_connects = compare_lists(connected, prev_connected)
         new_disconnects = compare_lists(prev_connected, connected)
-        
-        if len(new_logged_connects) == 1 and len(new_connects) == 1 and len(new_logged_disconnects) == 0 and len(new_disconnects) == 0:
-           ProfileStats.objects.get_or_create(profile_id=new_logged_connects[0], ip=new_connects[0], type=USER_CONNECTED, connection_date=timezone.now())
-        if len(new_logged_disconnects) == 1 and len(new_disconnects) == 1 and len(new_logged_connects) == 0 and len(new_connects) == 0:
-           ProfileStats.objects.get_or_create(profile_id=new_logged_disconnects[0], ip=new_disconnects[0], type=USER_DISCONNECTED, connection_date=timezone.now())
+
+        if (len(new_logged_connects) == 1
+                and len(new_connects) == 1
+                and len(new_logged_disconnects) == 0
+                and len(new_disconnects) == 0):
+            ProfileStats.objects.get_or_create(profile_id=new_logged_connects[0], ip=new_connects[0],
+                                               type=USER_CONNECTED, connection_date=timezone.now())
+        if (len(new_logged_disconnects) == 1
+                and len(new_disconnects) == 1
+                and len(new_logged_connects) == 0
+                and len(new_connects) == 0):
+            ProfileStats.objects.get_or_create(profile_id=new_logged_disconnects[0], ip=new_disconnects[0],
+                                               type=USER_DISCONNECTED, connection_date=timezone.now())
 
     return connected
