@@ -87,7 +87,7 @@ def guards(player):
 # Трижды Герой Советского Союза:
 # - лучший стрик сбитых
 def gold_star_3rd(player):
-    if player.is_top_streak() and not player.is_rewarded('gold_star_3rd'):
+    if player.coal_pref == Coalition.Allies and player.is_top_streak() and not player.is_rewarded('gold_star_3rd'):
         player.delete_rating_reward('gold_star_3rd')
         if player.is_rewarded('gold_star_2nd') and not player.is_rewarded('gold_star_3rd_ground'):
             return True
@@ -98,7 +98,8 @@ def gold_star_3rd(player):
 # Трижды Герой Советского Союза:
 # - лучший стрик по нц
 def gold_star_3rd_ground(player):
-    if player.is_top_ground_streak() and not player.is_rewarded('gold_star_3rd_ground'):
+    if (player.coal_pref == Coalition.Allies and player.is_top_ground_streak()
+            and not player.is_rewarded('gold_star_3rd_ground')):
         player.delete_rating_reward('gold_star_3rd_ground')
         if player.is_rewarded('gold_star_2nd') and not player.is_rewarded('gold_star_3rd'):
             return True
@@ -117,7 +118,7 @@ def gold_star_3rd_ground(player):
 #    или
 # - 100 уничтоженных нц для штурма и стрик из 10 боевых вылетов
 def gold_star_2nd(sortie):
-    if sortie.player.is_rewarded('gold_star'):
+    if sortie.player.coal_pref == Coalition.Allies and sortie.player.is_rewarded('gold_star'):
         if sortie.score > 0 and (sortie.ak_total >= 7 or (sortie.ak_total >= 3 and sortie.gk_total >= 10)):
             return True
         elif (sortie.score > 0
@@ -169,7 +170,7 @@ def gold_star(sortie):
 #    или
 # - 75 уничтоженных нц для штурма
 def order_of_lenin_2nd(sortie):
-    if sortie.player.is_rewarded('order_of_lenin'):
+    if sortie.player.coal_pref == Coalition.Allies and sortie.player.is_rewarded('order_of_lenin'):
         if sortie.ak_total >= 6 or sortie.tanks_total >= 8:
             return True
         elif sortie.ak_total >= 3 and sortie.gk_total >= 5:
@@ -212,7 +213,7 @@ def order_of_lenin(sortie):
 # Орден Красного Знамени 5й:
 # - 250 боевых вылетов
 def red_banner_5th(player):
-    if player.is_rewarded('red_banner_4th'):
+    if player.coal_pref == Coalition.Allies and player.is_rewarded('red_banner_4th'):
         if player.get_combat_sorties() >= 250:
             return True
 
@@ -220,7 +221,7 @@ def red_banner_5th(player):
 # Орден Красного Знамени 4й:
 # - 200 боевых вылетов
 def red_banner_4th(player):
-    if player.is_rewarded('red_banner_3rd'):
+    if player.coal_pref == Coalition.Allies and player.is_rewarded('red_banner_3rd'):
         if player.get_combat_sorties() >= 200:
             return True
 
@@ -228,7 +229,7 @@ def red_banner_4th(player):
 # Орден Красного Знамени 3й:
 # - 150 боевых вылетов
 def red_banner_3rd(player):
-    if player.is_rewarded('red_banner_2nd'):
+    if player.coal_pref == Coalition.Allies and player.is_rewarded('red_banner_2nd'):
         if player.get_combat_sorties() >= 150:
             return True
 
@@ -236,7 +237,7 @@ def red_banner_3rd(player):
 # Орден Красного Знамени 2й:
 # - 100 боевых вылетов
 def red_banner_2nd(player):
-    if player.is_rewarded('red_banner'):
+    if player.coal_pref == Coalition.Allies and player.is_rewarded('red_banner'):
         if player.get_combat_sorties() >= 100:
             return True
 
@@ -261,7 +262,7 @@ def red_star(player_mission):
 # Орден Отечественной войны 1-й степени:
 # - участие в закрытии 50 карт
 def order_of_patriotic_war_1st_class(player):
-    if player.is_rewarded('order_of_patriotic_war_2nd_class'):
+    if player.coal_pref == Coalition.Allies and player.is_rewarded('order_of_patriotic_war_2nd_class'):
         return player.get_successful_missions() >= 50
 
 
@@ -274,29 +275,46 @@ def order_of_patriotic_war_2nd_class(player):
 
 # Орден Славы I степени:
 # - уничтожить не менее 3-х тяжелых танков или 6 средних или 8 танков за боевой вылет
+# - уничтожить не мене 5 самолетов или 3 ударных за вылет
+# - уничтожить не менее 3-х кораблей
 def order_of_glory_1st_class(sortie):
-    if sortie.player.is_rewarded('order_of_glory_2rd_class'):
-        if (sortie.score > 0
-                and (sortie.killboard_pve.get('tank_heavy', 0) >= 3 or sortie.killboard_pve.get('tank_medium', 0) >= 6)
-                or sortie.tanks_total >= 8):
-            return True
+    if sortie.player.coal_pref == Coalition.Allies and sortie.player.is_rewarded('order_of_glory_2rd_class'):
+        if sortie.score > 0:
+            if (sortie.killboard_pve.get('tank_heavy', 0) >= 3
+                    or sortie.killboard_pve.get('tank_medium', 0) >= 6
+                    or sortie.tanks_total >= 8):
+                return True
+            elif (sortie.sortie.ak_total >= 5 or (
+                    (sortie.killboard_pve.get('aircraft_medium', 0) +
+                     sortie.killboard_pve.get('aircraft_heavy', 0)) >= 3)):
+                return True
+            elif sortie.killboard_pve.get('ship', 0) >= 3:
+                return True
 
 
 # Орден Славы II степени:
-# - уничтожить не менее 3-х кораблей за боевой вылет
+# - уничтожить не менее 2-х кораблей или 4 танков за боевой вылет
+# - или сбить 2 ударника
+# - или сбить 3 самолёта, один из них ударный
 def order_of_glory_2nd_class(sortie):
-    if sortie.player.is_rewarded('order_of_glory_3rd_class'):
-        if sortie.score > 0 and sortie.killboard_pve.get('ship', 0) >= 3:
-            return True
+    if sortie.player.coal_pref == Coalition.Allies and sortie.player.is_rewarded('order_of_glory_3rd_class'):
+        if sortie.score > 0:
+            if sortie.killboard_pve.get('ship', 0) >= 2 or sortie.tanks_total >= 4:
+                return True
+            elif (sortie.killboard_pve.get('aircraft_medium', 0) + sortie.killboard_pve.get('aircraft_heavy', 0)) >= 2:
+                return True
+            elif (sortie.sortie.ak_total >= 3
+                  and (sortie.killboard_pve.get('aircraft_medium', 0)
+                       + sortie.killboard_pve.get('aircraft_heavy', 0)) >= 1):
+                return True
 
 
 # Орден Славы III степени:
-# - сбить 1 самолет и минимум 1 единицу наземки за боевой вылет
+# - сбить 1 самолет или 1 танк за боевой вылет
 def order_of_glory_3rd_class(sortie):
     if (sortie.player.coal_pref == Coalition.Allies
             and not sortie.player.is_officer()):
-        if (sortie.score > 0 and sortie.ak_total >= 1 and sortie.gk_total >= 1
-                and (sortie.aircraft.cls == 'aircraft_heavy' or sortie.aircraft.cls == 'aircraft_medium')):
+        if sortie.score > 0 and (sortie.ak_total >= 1 or sortie.tanks_total):
             return True
 
 
@@ -335,7 +353,7 @@ def medal_for_victory(player):
 
 
 """
-#           Награды Фашисткой Германии
+# Награды Фашисткой Германии
 """
 
 
@@ -349,60 +367,6 @@ def luftwaffe_badge(player):
             player.delete_rating_reward('guards')
             player.delete_rating_reward('luftwaffe_badge')
             player.squad.reward_squad('luftwaffe_badge')
-
-
-#       Кресты
-#   Железный крест
-# Железный крест 1-го класса
-def iron_cross_1st_class(player_mission):
-    result = False
-    if (player_mission.player.coal_pref == Coalition.Axis
-            and player_mission.mission.winning_coalition == Coalition.Axis
-            and player_mission.player.is_rewarded('iron_cross_2nd_class')):
-        if player_mission.get_mission_combat_sorties() >= 3 and player_mission.score >= 1000:
-            if player_mission.player.streak_current >= 10:
-                result = True
-            elif (player_mission.player.get_fav_aircraft_type() == 'aircraft_medium'
-                  and player_mission.player.sorties_streak_current >= 20):
-                result = True
-            elif (player_mission.player.get_fav_aircraft_type() == 'aircraft_heavy'
-                  and player_mission.player.sorties_streak_current >= 10):
-                result = True
-            if result:
-                return result
-
-
-# Железный крест 2-го класса - условия как у Красной Звезды
-def iron_cross_2nd_class(player_mission):
-    if player_mission.player.coal_pref == Coalition.Axis and player_mission.mission.winning_coalition == Coalition.Axis:
-        return player_mission.get_mission_combat_sorties() >= 3 and player_mission.score >= 1000
-
-
-# Знак пилота
-def aeronautical_medal(player):
-    if player.coal_pref == Coalition.Axis:
-        return player.sorties_streak_current >= 2 and player.score_streak_current >= 200
-
-
-# Медаль "За зимнюю кампанию на Востоке 1941/42" - условия как у медали "За победу над Германией"
-def medal_eastern_front(player):
-    if player.coal_pref == Coalition.Axis and not player.is_rewarded('medal_eastern_front'):
-        prev_player = player.get_prev_player()
-        if (prev_player and prev_player.coal_pref == player.coal_pref
-                and prev_player.tour.winning_coalition == prev_player.coal_pref):
-            return prev_player.get_combat_sorties() >= 50
-
-
-# Крест "За верную службу в вермахте" в серебре - условия как у Отечественной войны 2-й степени
-def wehrmacht_long_service_silver(player):
-    if player.coal_pref == Coalition.Axis:
-        return player.get_successful_missions() >= 25
-
-
-# Крест "За верную службу в вермахте" в золоте - условия как у Отечественной войны 1-й степени
-def wehrmacht_long_service_gold(player):
-    if player.coal_pref == Coalition.Axis:
-        return player.get_successful_missions() >= 50
 
 
 # Рыцарский крест с мечами и дубовыми листьями  - условия как у второго Ордена Ленина
@@ -468,33 +432,10 @@ def knights_cross_leaves_swords_diamonds_gold_ground(player):
                                     'knights_cross_leaves_swords_diamonds')
 
 
-# Рыцарский крест - условия как у Ордена Ленина
-def knights_cross(sortie):
-    if (sortie.player.coal_pref == Coalition.Axis
-            and sortie.player.is_officer()
-            and not (sortie.player.is_rewarded('knights_cross_leaves')
-                     or sortie.player.is_rewarded('knights_cross_leaves_swords')
-                     or sortie.player.is_rewarded('knights_cross_leaves_swords_diamonds')
-                     or sortie.player.is_rewarded('knights_cross_leaves_swords_diamonds_gold')
-                     or sortie.player.is_rewarded('knights_cross_leaves_swords_diamonds_gold_ground'))):
-        if sortie.score > 0 and (sortie.ak_total >= 4 or sortie.tanks_total >= 6):
-            return True
-        elif (sortie.score >= 600
-              and (sortie.ak_total >= 1 and sortie.gk_total >= 5)
-              and (sortie.aircraft.cls == 'aircraft_heavy' or sortie.aircraft.cls == 'aircraft_medium')):
-            return True
-        elif sortie.player.streak_current >= 10:
-            return True
-        elif sortie.player.get_fav_aircraft_type() == 'aircraft_heavy' and sortie.player.streak_ground_current >= 150:
-            return True
-        elif sortie.player.get_fav_aircraft_type() == 'aircraft_medium' and sortie.player.streak_ground_current >= 40:
-            return True
-
-
 # Рыцарский крест с дубовыми листьями - условия как у ГСС-1
 def knights_cross_leaves(sortie):
     result = False
-    if sortie.player.is_rewarded('knights_cross'):
+    if sortie.player.coal_pref == Coalition.Axis and sortie.player.is_rewarded('knights_cross'):
         if sortie.score > 0 and (sortie.ak_total >= 5 or (sortie.ak_total >= 2 and sortie.gk_total >= 10)):
             result = True
         elif sortie.player.streak_current >= 15 and sortie.player.sorties_streak_current >= 15:
@@ -512,71 +453,148 @@ def knights_cross_leaves(sortie):
         return result
 
 
-# Крест «За военные заслуги» 2-й степени:
-# - уничтожить 20 единиц любой наземки за вылет
-def war_merit_cross_2nd_class(sortie):
-    if sortie.player.coal_pref == Coalition.Axis and not sortie.player.is_officer():
-        if sortie.score > 0 and sortie.gk_total >= 20:
+# Рыцарский крест
+def knights_cross(sortie):
+    if sortie.player.coal_pref == Coalition.Axis and sortie.player.is_rewarded('iron_cross_1'):
+        if sortie.score > 0 and (sortie.ak_total >= 5 or (sortie.ak_total >= 2 and sortie.gk_total >= 10)):
+            return True
+        elif sortie.player.streak_current >= 10 and sortie.player.sorties_streak_current >= 5:
+            return True
+        elif (sortie.player.get_fav_aircraft_type() == 'aircraft_heavy'
+              and sortie.player.streak_ground_current >= 150
+              and sortie.player.sorties_streak_current >= 5):
+            return True
+        elif (sortie.player.get_fav_aircraft_type() == 'aircraft_medium'
+              and sortie.player.streak_ground_current >= 30
+              and sortie.player.sorties_streak_current >= 5):
             return True
 
 
-# Крест «За военные заслуги» 1-й степени:
-# - уничтожить 4 танков за вылет
-def war_merit_cross_1st_class(sortie):
-    if sortie.player.coal_pref == Coalition.Axis and not sortie.player.is_officer():
-        if (sortie.score > 0 and sortie.tanks_total >= 4
-                and (sortie.aircraft.cls == 'aircraft_heavy' or sortie.aircraft.cls == 'aircraft_medium')):
-            return True
-
-
-# Рыцарский крест «За военные заслуги»:
-# - уничтожить 50 единиц любой наземки за вылет
-def knights_war_merit_cross(sortie):
-    if sortie.player.coal_pref == Coalition.Axis and not sortie.player.is_officer():
-        if (sortie.score > 0 and sortie.gk_total >= 50
-                and (sortie.aircraft.cls == 'aircraft_heavy' or sortie.aircraft.cls == 'aircraft_medium')):
-            return True
-
-
-# Рыцарский крест «За военные заслуги» с мечами:
-# - уничтожить 6 танков за вылет
-def knights_war_merit_cross_swords(sortie):
-    if sortie.player.coal_pref == Coalition.Axis and not sortie.player.is_officer():
-        if (sortie.score > 0 and sortie.tanks_total >= 6
-                and (sortie.aircraft.cls == 'aircraft_heavy' or sortie.aircraft.cls == 'aircraft_medium')):
-            return True
-
-
-# Германский крест в серебре тканевый - условия как у Ордена Красного Знамени 1го
-def german_cross_silver_cloth(player):
-    if player.coal_pref == Coalition.Axis:
-        if player.get_combat_sorties() >= 50:
-            return True
-
-
-# Германский крест в золоте тканевый - условия как у Ордена Красного Знамени 2го
-def german_cross_gold_cloth(player):
-    if player.coal_pref == Coalition.Axis:
+# Германский крест в золоте
+def deutsch_cross_gold(player):
+    if player.coal_pref == Coalition.Axis and (player.is_rewarded('iron_cross_1') or
+                                               player.is_rewarded('military_merit_silver')):
         if player.get_combat_sorties() >= 100:
             return True
 
 
-# Германский крест в серебре - условия как у Ордена Красного Знамени 3го
-def german_cross_silver(player):
-    if player.coal_pref == Coalition.Axis:
-        if player.get_combat_sorties() >= 150:
+# Почетный кубок:
+# - сбить 4 самолета противника за вылет
+#    или
+# - уничтожить 6 танков за вылет
+#    или
+# - сбить 1 самолет и уничтожить не менее 5 нц набрав не менее 600 очков (для боброштурмов)
+# - или
+# - стрик 10 сбитых самолетов
+#    или
+# - стрик 150 уничтоженных нц для бобра
+#    или
+# - 40 уничтоженных нц для штурма
+def luftwaffe_cup(sortie):
+    if sortie.player.coal_pref == Coalition.Axis and sortie.player.is_officer():
+        if sortie.ak_total >= 4 or sortie.tanks_total >= 6:
+            return True
+        elif (sortie.score >= 600 and (sortie.ak_total >= 1 and sortie.gk_total >= 5)
+              and (sortie.aircraft.cls == 'aircraft_heavy' or sortie.aircraft.cls == 'aircraft_medium')):
+            return True
+        elif sortie.player.streak_current >= 10:
+            return True
+        elif sortie.player.get_fav_aircraft_type() == 'aircraft_heavy' and sortie.player.streak_ground_current >= 150:
+            return True
+        elif sortie.player.get_fav_aircraft_type() == 'aircraft_medium' and sortie.player.streak_ground_current >= 40:
             return True
 
 
-# Германский крест в золоте - условия как у Ордена Красного Знамени 4го
-def german_cross_gold(player):
-    if player.coal_pref == Coalition.Axis:
-        if player.get_combat_sorties() >= 200:
+#   Железный крест
+# Железный крест 1-го класса
+def iron_cross_1(player_mission):
+    result = False
+    if (player_mission.player.coal_pref == Coalition.Axis
+            and player_mission.mission.winning_coalition == Coalition.Axis
+            and player_mission.player.is_rewarded('iron_cross_2')):
+        if player_mission.get_mission_combat_sorties() >= 3 and player_mission.score >= 1000:
+            if player_mission.player.streak_current >= 10:
+                result = True
+            elif (player_mission.player.get_fav_aircraft_type() == 'aircraft_medium'
+                  and player_mission.player.sorties_streak_current >= 20):
+                result = True
+            elif (player_mission.player.get_fav_aircraft_type() == 'aircraft_heavy'
+                  and player_mission.player.sorties_streak_current >= 10):
+                result = True
+            if result:
+                return result
+
+
+# Железный крест 2-го класса
+def iron_cross_2nd_class(player_mission):
+    if player_mission.player.coal_pref == Coalition.Axis and player_mission.mission.winning_coalition == Coalition.Axis:
+        if (player_mission.killboard_pve.get('ship', 0) >= 2 or
+                (player_mission.killboard_pvp.get('tank_light', 0) +
+                 player_mission.killboard_pvp.get('tank_medium', 0) +
+                 player_mission.killboard_pvp.get('tank_heavy', 0)) >= 4):
+            return True
+        elif (player_mission.killboard_pvp.get('aircraft_medium', 0) +
+              player_mission.killboard_pvp.get('aircraft_heavy', 0)) >= 2:
+            return True
+        elif ((player_mission.killboard_pvp.get('aircraft_light', 0) +
+               player_mission.killboard_pvp.get('aircraft_medium', 0) +
+               player_mission.killboard_pvp.get('aircraft_heavy', 0)) >= 3
+              and (player_mission.killboard_pvp.get('aircraft_medium', 0)
+                   + player_mission.killboard_pvp.get('aircraft_heavy', 0)) >= 1):
             return True
 
 
-# Германский крест в золоте с бриллиантами - условия как у Ордена Красного Знамени 5го
-def german_cross_diamonds(player):
+# Рыцарский крест Креста военных заслуг с мечами:
+# - уничтожить не менее 3-х тяжелых танков или 6 средних или 8 танков за боевой вылет
+# - уничтожить не мене 5 самолетов или 3 ударных за вылет
+# - уничтожить не менее 3-х кораблей
+def military_merit_knight(sortie):
+    if sortie.player.coal_pref == Coalition.Axis and sortie.player.is_rewarded('military_merit_silver'):
+        if sortie.score > 0:
+            if (sortie.killboard_pve.get('tank_heavy', 0) >= 3
+                    or sortie.killboard_pve.get('tank_medium', 0) >= 6
+                    or sortie.tanks_total >= 8):
+                return True
+            elif (sortie.sortie.ak_total >= 5 or (
+                    (sortie.killboard_pve.get('aircraft_medium', 0) +
+                     sortie.killboard_pve.get('aircraft_heavy', 0)) >= 3)):
+                return True
+            elif sortie.killboard_pve.get('ship', 0) >= 3:
+                return True
+
+
+# Крест военных заслуг с мечами в (посеребренный):
+# - боевой вылет
+# - посадка на аэродроме
+# - ранение более 25% или повреждение самолета более 40%
+def military_merit_silver(sortie):
+    if sortie.player.coal_pref == Coalition.Axis and sortie.player.is_rewarded('military_merit_bronze'):
+        return (sortie.score > 0 and sortie.status == SortieStatus.landed
+                and ((sortie.aircraft_status == LifeStatus.damaged and sortie.damage > 40)
+                     or (sortie.bot_status == BotLifeStatus.wounded and sortie.wound > 25)))
+
+
+#  Крест военных заслуг с мечами в бронзе:
+# - стрик не менее 10 боевых вылетов
+# - набрать не менее 3000 очков
+def military_merit_bronze(player):
     if player.coal_pref == Coalition.Axis:
-        if player.get_combat_sorties() >= 250:
+        return player.sorties_streak_current >= 10 and player.score_streak_current >= 3000
+
+
+# Знак пилота
+# набрано более 200 очков
+# и стрик не менее 2 боевых вылетов
+def pilot_badge(player):
+    if player.coal_pref == Coalition.Axis:
+        if player.score_streak_current >= 200 and player.sorties_streak_current >= 2:
             return True
+
+
+# Медаль «За зимнюю кампанию на Востоке 1941/42»
+def medal_previous_tour(player):
+    if player.coal_pref == Coalition.Axis and not player.is_rewarded('medal_previous_tour'):
+        prev_player = player.get_prev_player()
+        if (prev_player and prev_player.coal_pref == player.coal_pref
+                and prev_player.tour.winning_coalition == prev_player.coal_pref):
+            return prev_player.get_combat_sorties() >= 50
