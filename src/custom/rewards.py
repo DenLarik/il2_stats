@@ -124,9 +124,13 @@ def gold_star_2nd(sortie):
         elif (sortie.score > 0
               and (sortie.player.streak_current >= 50 and sortie.player.sorties_streak_current >= 30)):
             return True
-        elif sortie.player.get_fav_aircraft_type() == 'aircraft_heavy' and sortie.player.streak_ground_current >= 450 and sortie.player.sorties_streak_current >= 20:
+        elif (sortie.player.get_fav_aircraft_type() == 'aircraft_heavy'
+              and sortie.player.streak_ground_current >= 450
+              and sortie.player.sorties_streak_current >= 20):
             return True
-        elif sortie.player.get_fav_aircraft_type() == 'aircraft_medium' and sortie.player.streak_ground_current >= 100 and sortie.player.sorties_streak_current >= 10:
+        elif (sortie.player.get_fav_aircraft_type() == 'aircraft_medium'
+              and sortie.player.streak_ground_current >= 100
+              and sortie.player.sorties_streak_current >= 10):
             return True
 
 
@@ -348,7 +352,8 @@ def medal_for_battle_merit(player):
 def medal_for_victory(player):
     if player.coal_pref == Coalition.Allies and not player.is_rewarded('medal_for_victory'):
         prev_player = player.get_prev_player()
-        if prev_player and prev_player.coal_pref == player.coal_pref and prev_player.tour.winning_coalition == prev_player.coal_pref:
+        if (prev_player and prev_player.coal_pref == player.coal_pref
+                and prev_player.tour.winning_coalition == prev_player.coal_pref):
             return prev_player.get_combat_sorties() >= 50
 
 
@@ -396,9 +401,13 @@ def knights_cross_leaves_swords_diamonds(sortie):
             result = True
         elif sortie.player.streak_current >= 50 and sortie.player.sorties_streak_current >= 30:
             result = True
-        elif sortie.player.get_fav_aircraft_type() == 'aircraft_heavy' and sortie.player.streak_ground_current >= 450 and sortie.player.sorties_streak_current >= 20:
+        elif (sortie.player.get_fav_aircraft_type() == 'aircraft_heavy'
+              and sortie.player.streak_ground_current >= 450
+              and sortie.player.sorties_streak_current >= 20):
             result = True
-        elif sortie.player.get_fav_aircraft_type() == 'aircraft_medium' and sortie.player.streak_ground_current >= 100 and sortie.player.sorties_streak_current >= 10:
+        elif (sortie.player.get_fav_aircraft_type() == 'aircraft_medium'
+              and sortie.player.streak_ground_current >= 100
+              and sortie.player.sorties_streak_current >= 10):
             result = True
     if result:
         sortie.player.delete_reward('knights_cross_leaves_swords')
