@@ -284,7 +284,7 @@ def order_of_glory_1st_class(sortie):
                     or sortie.killboard_pve.get('tank_medium', 0) >= 6
                     or sortie.tanks_total >= 8):
                 return True
-            elif (sortie.sortie.ak_total >= 5 or (
+            elif (sortie.ak_total >= 5 or (
                     (sortie.killboard_pve.get('aircraft_medium', 0) +
                      sortie.killboard_pve.get('aircraft_heavy', 0)) >= 3)):
                 return True
@@ -303,7 +303,7 @@ def order_of_glory_2nd_class(sortie):
                 return True
             elif (sortie.killboard_pve.get('aircraft_medium', 0) + sortie.killboard_pve.get('aircraft_heavy', 0)) >= 2:
                 return True
-            elif (sortie.sortie.ak_total >= 3
+            elif (sortie.ak_total >= 3
                   and (sortie.killboard_pve.get('aircraft_medium', 0)
                        + sortie.killboard_pve.get('aircraft_heavy', 0)) >= 1):
                 return True
@@ -526,7 +526,7 @@ def iron_cross_1(player_mission):
 
 
 # Железный крест 2-го класса
-def iron_cross_2nd_class(player_mission):
+def iron_cross_2(player_mission):
     if player_mission.player.coal_pref == Coalition.Axis and player_mission.mission.winning_coalition == Coalition.Axis:
         if (player_mission.killboard_pve.get('ship', 0) >= 2 or
                 (player_mission.killboard_pvp.get('tank_light', 0) +
@@ -577,17 +577,17 @@ def military_merit_silver(sortie):
 #  Крест военных заслуг с мечами в бронзе:
 # - стрик не менее 10 боевых вылетов
 # - набрать не менее 3000 очков
-def military_merit_bronze(player):
-    if player.coal_pref == Coalition.Axis:
-        return player.sorties_streak_current >= 10 and player.score_streak_current >= 3000
+def military_merit_bronze(sortie):
+    if sortie.player.coal_pref == Coalition.Axis:
+        return sortie.player.sorties_streak_current >= 10 and sortie.player.score_streak_current >= 3000
 
 
 # Знак пилота
 # набрано более 200 очков
 # и стрик не менее 2 боевых вылетов
-def pilot_badge(player):
-    if player.coal_pref == Coalition.Axis:
-        if player.score_streak_current >= 200 and player.sorties_streak_current >= 2:
+def pilot_badge(player_mission):
+    if player_mission.player.coal_pref == Coalition.Axis:
+        if player_mission.player.score_streak_current >= 200 and player_mission.player.sorties_streak_current >= 2:
             return True
 
 
@@ -598,3 +598,84 @@ def medal_previous_tour(player):
         if (prev_player and prev_player.coal_pref == player.coal_pref
                 and prev_player.tour.winning_coalition == prev_player.coal_pref):
             return prev_player.get_combat_sorties() >= 50
+
+
+# Старые награды
+#   Железный крест
+# Железный крест 1-го класса
+def iron_cross_1st_class(player_mission):
+    return False
+
+
+# Железный крест 2-го класса - условия как у Красной Звезды
+def iron_cross_2nd_class(player_mission):
+    return False
+
+
+# Знак пилота
+def aeronautical_medal(player):
+    return False
+
+
+# Медаль "За зимнюю кампанию на Востоке 1941/42" - условия как у медали "За победу над Германией"
+def medal_eastern_front(player):
+    return False
+
+
+# Крест "За верную службу в вермахте" в серебре - условия как у Отечественной войны 2-й степени
+def wehrmacht_long_service_silver(player):
+    return False
+
+
+# Крест "За верную службу в вермахте" в золоте - условия как у Отечественной войны 1-й степени
+def wehrmacht_long_service_gold(player):
+    return False
+
+
+# Крест «За военные заслуги» 2-й степени:
+# - уничтожить 20 единиц любой наземки за вылет
+def war_merit_cross_2nd_class(sortie):
+    return False
+
+
+# Крест «За военные заслуги» 1-й степени:
+# - уничтожить 4 танков за вылет
+def war_merit_cross_1st_class(sortie):
+    return False
+
+
+# Рыцарский крест «За военные заслуги»:
+# - уничтожить 50 единиц любой наземки за вылет
+def knights_war_merit_cross(sortie):
+    return False
+
+
+# Рыцарский крест «За военные заслуги» с мечами:
+# - уничтожить 6 танков за вылет
+def knights_war_merit_cross_swords(sortie):
+    return False
+
+
+# Германский крест в серебре тканевый - условия как у Ордена Красного Знамени 1го
+def german_cross_silver_cloth(player):
+    return False
+
+
+# Германский крест в золоте тканевый - условия как у Ордена Красного Знамени 2го
+def german_cross_gold_cloth(player):
+    return False
+
+
+# Германский крест в серебре - условия как у Ордена Красного Знамени 3го
+def german_cross_silver(player):
+    return False
+
+
+# Германский крест в золоте - условия как у Ордена Красного Знамени 4го
+def german_cross_gold(player):
+    return False
+
+
+# Германский крест в золоте с бриллиантами - условия как у Ордена Красного Знамени 5го
+def german_cross_diamonds(player):
+    return False

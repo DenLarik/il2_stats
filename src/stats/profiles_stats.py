@@ -60,7 +60,6 @@ def get_profile_id(uuid):
 
 
 def update_profile_stats(m_report_files, prev_connected):
-    logger.warning('execute update_profile_stats')
     connected = get_stats(SERVER_IP, SERVER_PORT)
     new_logged_connects = []
     new_logged_disconnects = []

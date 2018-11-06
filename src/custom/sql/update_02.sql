@@ -1,6 +1,6 @@
 DELETE FROM rewards WHERE date >'2018-11-01';
 INSERT INTO public.awards(
-	id, func, type, img, title_en, title_ru, title_de, "desc", desc_ru)
+	id, func, type, img, title, title_ru, title_de, "desc", desc_ru)
 	VALUES (1500, 'medal_previous_tour', 'tour', 'awards/axis/1500.png', 'Medal "For the winter campaign of 1941-42 in the East"','Медаль «За зимнюю кампанию на Востоке 1941/42»', 'Medaille "Winterschlacht im Osten 1941/42" ', 'Win previous tour with at least 50 combat sorties', 'Отображается у участника команды победителя прошлого тура при наличии в прошлом туре 50 боевых вылетов'),
 	(1490,'pilot_badge','mission','awards/axis/1490.png','Pilot''s Luftwaffe qualification badge','Квалификационный нагрудный знак люфтваффе «Пилот»','Flugzeugführerabzeichen','Scored over 200 points
 and streak at least 2 sorties','Набрано более 200 очков
