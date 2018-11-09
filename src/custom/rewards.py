@@ -573,14 +573,18 @@ def military_merit_knight(sortie):
 
 
 # Крест военных заслуг с мечами в (посеребренный):
-# - боевой вылет
-# - посадка на аэродроме
-# - ранение более 25% или повреждение самолета более 40%
+# - быть награжденным Крестом военных заслуг с мечами в бронзе
+# - уничтожить:
+# 2 корабля
+# или 4 танка
+# или сбить 3 самолёта
 def military_merit_silver(sortie):
     if sortie.player.coal_pref == Coalition.Axis and sortie.player.is_rewarded('military_merit_bronze'):
-        return (sortie.score > 0 and sortie.status == SortieStatus.landed
-                and ((sortie.aircraft_status == LifeStatus.damaged and sortie.damage > 40)
-                     or (sortie.bot_status == BotLifeStatus.wounded and sortie.wound > 25)))
+        if sortie.score > 0:
+            if sortie.killboard_pve.get('ship', 0) >= 2 or sortie.tanks_total >= 4:
+                return True
+            elif sortie.ak_total >= 3:
+                return True
 
 
 #  Крест военных заслуг с мечами в бронзе:
