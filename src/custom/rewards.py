@@ -464,7 +464,9 @@ def knights_cross_leaves(sortie):
 
 # Рыцарский крест
 def knights_cross(sortie):
-    if sortie.player.coal_pref == Coalition.Axis and sortie.player.is_rewarded('iron_cross_1'):
+    if (sortie.player.coal_pref == Coalition.Axis and (
+            sortie.player.is_rewarded('iron_cross_1'))
+            or sortie.player.is_rewarded('military_merit_silver')):
         if sortie.score > 0 and (sortie.ak_total >= 5 or (sortie.ak_total >= 2 and sortie.gk_total >= 10)):
             return True
         elif sortie.player.streak_current >= 10 and sortie.player.sorties_streak_current >= 5:
@@ -481,9 +483,9 @@ def knights_cross(sortie):
 
 # Германский крест в золоте
 def deutsch_cross_gold(player):
-    if player.coal_pref == Coalition.Axis and (player.is_rewarded('iron_cross_1') or
-                                               player.is_rewarded('military_merit_silver')):
-        if player.get_combat_sorties() >= 100:
+    if (player.coal_pref == Coalition.Axis and (player.is_rewarded('iron_cross_1')
+                                                or player.is_rewarded('military_merit_silver'))):
+        if player.get_combat_sorties() >= 50:
             return True
 
 
@@ -517,21 +519,18 @@ def luftwaffe_cup(sortie):
 #   Железный крест
 # Железный крест 1-го класса
 def iron_cross_1(player_mission):
-    result = False
     if (player_mission.player.coal_pref == Coalition.Axis
             and player_mission.mission.winning_coalition == Coalition.Axis
             and player_mission.player.is_rewarded('iron_cross_2')):
         if player_mission.get_mission_combat_sorties() >= 3 and player_mission.score >= 1000:
             if player_mission.player.streak_current >= 10:
-                result = True
+                return True
             elif (player_mission.player.get_fav_aircraft_type() == 'aircraft_medium'
                   and player_mission.player.sorties_streak_current >= 20):
-                result = True
+                return True
             elif (player_mission.player.get_fav_aircraft_type() == 'aircraft_heavy'
                   and player_mission.player.sorties_streak_current >= 10):
-                result = True
-            if result:
-                return result
+                return True
 
 
 # Железный крест 2-го класса
@@ -564,7 +563,7 @@ def military_merit_knight(sortie):
                     or sortie.killboard_pve.get('tank_medium', 0) >= 6
                     or sortie.tanks_total >= 8):
                 return True
-            elif (sortie.sortie.ak_total >= 5 or (
+            elif (sortie.ak_total >= 5 or (
                     (sortie.killboard_pve.get('aircraft_medium', 0) +
                      sortie.killboard_pve.get('aircraft_heavy', 0)) >= 3)):
                 return True
