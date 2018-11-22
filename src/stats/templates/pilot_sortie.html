@@ -503,6 +503,48 @@
                     </div>
                 {% endif %}
 
+                {% if sortie.killboard_pve.ship_heavy %}
+                    <div class="sub_row">
+                        <div class="left">
+                            {% trans 'Heavy Ships' context 'total' %}
+                            <span>{{ sortie.killboard_pve.ship_heavy }}</span>
+                        </div>
+                        <div class="right score">
+                            {{ sortie.killboard_pve.ship_heavy }}
+                            &times;
+                            {{ score_dict.ship_heavy }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if sortie.killboard_pve.ship_medium %}
+                    <div class="sub_row">
+                        <div class="left">
+                            {% trans 'Medium Ships' context 'total' %}
+                            <span>{{ sortie.killboard_pve.ship_medium }}</span>
+                        </div>
+                        <div class="right score">
+                            {{ sortie.killboard_pve.ship_medium }}
+                            &times;
+                            {{ score_dict.ship_medium }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if sortie.killboard_pve.ship_light %}
+                    <div class="sub_row">
+                        <div class="left">
+                            {% trans 'Light Ships' context 'total' %}
+                            <span>{{ sortie.killboard_pve.ship_light }}</span>
+                        </div>
+                        <div class="right score">
+                            {{ sortie.killboard_pve.ship_light }}
+                            &times;
+                            {{ score_dict.ship_light }}
+                        </div>
+                    </div>
+                {% endif %}
+
                 {% if sortie.killboard_pve.aircraft_static %}
                     <div class="sub_row">
                         <div class="left">
@@ -569,6 +611,48 @@
                             {{ sortie.killboard_pve.industrial }}
                             &times;
                             {{ score_dict.industrial }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if sortie.killboard_pve.building_big %}
+                    <div class="sub_row">
+                        <div class="left">
+                            {% trans 'Big buildings' context 'total' %}
+                            <span>{{ sortie.killboard_pve.building_big }}</span>
+                        </div>
+                        <div class="right score">
+                            {{ sortie.killboard_pve.building_big }}
+                            &times;
+                            {{ score_dict.building_big }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if sortie.killboard_pve.building_medium %}
+                    <div class="sub_row">
+                        <div class="left">
+                            {% trans 'Medium buildings' context 'total' %}
+                            <span>{{ sortie.killboard_pve.building_medium }}</span>
+                        </div>
+                        <div class="right score">
+                            {{ sortie.killboard_pve.building_medium }}
+                            &times;
+                            {{ score_dict.building_medium }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if sortie.killboard_pve.building_small %}
+                    <div class="sub_row">
+                        <div class="left">
+                            {% trans 'Small buildings' context 'total' %}
+                            <span>{{ sortie.killboard_pve.building_small }}</span>
+                        </div>
+                        <div class="right score">
+                            {{ sortie.killboard_pve.building_small }}
+                            &times;
+                            {{ score_dict.building_small }}
                         </div>
                     </div>
                 {% endif %}
