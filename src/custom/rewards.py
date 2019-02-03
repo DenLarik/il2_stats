@@ -396,7 +396,8 @@ def knights_cross_leaves_swords(sortie):
 # Рыцарский крест с мечами, дубовыми листьями и бриллиантами - условия как у дважды Героя Советского Союза
 def knights_cross_leaves_swords_diamonds(sortie):
     result = False
-    if sortie.player.is_rewarded('knights_cross_leaves_swords'):
+    if (not sortie.player.is_rewarded('knights_cross_leaves_swords_diamonds')
+            and sortie.player.is_rewarded('knights_cross_leaves_swords')):
         if sortie.score > 0 and (sortie.ak_total >= 7 or (sortie.ak_total >= 3 and sortie.gk_total >= 10)):
             result = True
         elif sortie.player.streak_current >= 50 and sortie.player.sorties_streak_current >= 30:
@@ -423,7 +424,10 @@ def knights_cross_leaves_swords_diamonds_gold(player):
                 'knights_cross_leaves_swords_diamonds_gold_ground'):
             player.update_reward('knights_cross_leaves_swords_diamonds', 'knights_cross_leaves_swords_diamonds_gold')
     elif not player.is_top_ground_streak() and player.is_rewarded('knights_cross_leaves_swords_diamonds_gold'):
-        player.update_rating_reward('knights_cross_leaves_swords_diamonds_gold', 'knights_cross_leaves_swords_diamonds')
+        if player.is_rewarded('knights_cross_leaves_swords_diamonds'):
+            player.delete_reward('knights_cross_leaves_swords_diamonds_gold')
+        else:
+            player.update_reward('knights_cross_leaves_swords_diamonds_gold', 'knights_cross_leaves_swords_diamonds')
 
 
 # Рыцарский крест с мечами, золотыми дубовыми листьями и бриллиантами - условия как у трижды Героя Советского Союза
