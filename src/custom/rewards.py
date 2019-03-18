@@ -419,6 +419,7 @@ def knights_cross_leaves_swords_diamonds(sortie):
 def knights_cross_leaves_swords_diamonds_gold(player):
     if player.is_top_streak() and not player.is_rewarded(
             'knights_cross_leaves_swords_diamonds_gold') and player.coal_pref == Coalition.Axis:
+        player.delete_rating_reward('knights_cross_leaves_swords_diamonds_gold')
         player.update_rating_reward('knights_cross_leaves_swords_diamonds_gold', 'knights_cross_leaves_swords_diamonds')
         if player.is_rewarded('knights_cross_leaves_swords_diamonds') and not player.is_rewarded(
                 'knights_cross_leaves_swords_diamonds_gold_ground'):
@@ -432,8 +433,9 @@ def knights_cross_leaves_swords_diamonds_gold(player):
 
 # Рыцарский крест с мечами, золотыми дубовыми листьями и бриллиантами - условия как у трижды Героя Советского Союза
 def knights_cross_leaves_swords_diamonds_gold_ground(player):
-    if player.is_top_ground_streak() and not player.is_rewarded(
-            'knights_cross_leaves_swords_diamonds_gold_ground') and player.coal_pref == Coalition.Axis:
+    if (player.is_top_ground_streak() and not player.is_rewarded(
+            'knights_cross_leaves_swords_diamonds_gold_ground') and player.coal_pref == Coalition.Axis):
+        player.delete_rating_reward('knights_cross_leaves_swords_diamonds_gold_ground')
         player.update_rating_reward('knights_cross_leaves_swords_diamonds_gold_ground',
                                     'knights_cross_leaves_swords_diamonds')
         if player.is_rewarded('knights_cross_leaves_swords_diamonds') and not player.is_rewarded(
