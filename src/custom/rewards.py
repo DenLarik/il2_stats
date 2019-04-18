@@ -443,8 +443,11 @@ def knights_cross_leaves_swords_diamonds_gold_ground(player):
             player.update_reward('knights_cross_leaves_swords_diamonds',
                                  'knights_cross_leaves_swords_diamonds_gold_ground')
     elif not player.is_top_ground_streak() and player.is_rewarded('knights_cross_leaves_swords_diamonds_gold_ground'):
-        player.update_rating_reward('knights_cross_leaves_swords_diamonds_gold_ground',
-                                    'knights_cross_leaves_swords_diamonds')
+        if player.is_rewarded('knights_cross_leaves_swords_diamonds'):
+            player.delete_reward('knights_cross_leaves_swords_diamonds_gold_ground')
+        else:
+            player.update_reward('knights_cross_leaves_swords_diamonds_gold_ground',
+                                 'knights_cross_leaves_swords_diamonds')
 
 
 # Рыцарский крест с дубовыми листьями - условия как у ГСС-1
