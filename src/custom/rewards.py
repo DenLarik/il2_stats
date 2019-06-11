@@ -307,17 +307,15 @@ def order_of_glory_2nd_class(sortie):
                 return True
             elif (sortie.killboard_pve.get('aircraft_medium', 0) + sortie.killboard_pve.get('aircraft_heavy', 0)) >= 2:
                 return True
-            elif (sortie.ak_total >= 3
-                  and (sortie.killboard_pve.get('aircraft_medium', 0)
-                       + sortie.killboard_pve.get('aircraft_heavy', 0)) >= 1):
+            elif (sortie.ak_total >= 3 and (sortie.killboard_pve.get('aircraft_medium', 0)
+                                            + sortie.killboard_pve.get('aircraft_heavy', 0)) >= 1):
                 return True
 
 
 # Орден Славы III степени:
 # - сбить 1 самолет или 1 танк за боевой вылет
 def order_of_glory_3rd_class(sortie):
-    if (sortie.player.coal_pref == Coalition.Allies
-            and not sortie.player.is_officer()):
+    if sortie.player.coal_pref == Coalition.Allies and not sortie.player.is_officer():
         if sortie.score > 0 and (sortie.ak_total >= 1 or sortie.tanks_total):
             return True
 
