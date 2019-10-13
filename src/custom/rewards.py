@@ -146,13 +146,14 @@ def gold_star_2nd(sortie):
 # - 50 уничтоженных нц для штурма и стрик из 5 боевых вылетов
 def gold_star(sortie):
     if sortie.player.coal_pref == Coalition.Allies:
-        if sortie.score > 0 and (sortie.ak_total >= 5 or (sortie.ak_total >= 2 and sortie.gk_total >= 10)):
+        if sortie.score > 0 and sortie.ak_total >= 5:
             return True
-        elif sortie.player.streak_current >= 15 and sortie.player.sorties_streak_current >= 15:
+        elif sortie.player.streak_current >= 15 and sortie.player.sorties_streak_current >= 10:
             return True
-        elif sortie.player.get_fav_aircraft_type() == 'aircraft_heavy' and sortie.player.streak_ground_current >= 250 and sortie.player.sorties_streak_current >= 10:
-            return True
-        elif sortie.player.get_fav_aircraft_type() == 'aircraft_medium' and sortie.player.streak_ground_current >= 50 and sortie.player.sorties_streak_current >= 5:
+        elif ((sortie.player.get_fav_aircraft_type() == 'aircraft_heavy'
+               or sortie.player.get_fav_aircraft_type() == 'aircraft_medium')
+              and sortie.player.streak_ground_current >= 150
+              and sortie.player.sorties_streak_current >= 10):
             return True
 
 
@@ -307,8 +308,9 @@ def order_of_glory_2nd_class(sortie):
                 return True
             elif (sortie.killboard_pve.get('aircraft_medium', 0) + sortie.killboard_pve.get('aircraft_heavy', 0)) >= 2:
                 return True
-            elif (sortie.ak_total >= 3 and (sortie.killboard_pve.get('aircraft_medium', 0)
-                                            + sortie.killboard_pve.get('aircraft_heavy', 0)) >= 1):
+            elif (sortie.ak_total >= 3
+                  and (sortie.killboard_pve.get('aircraft_medium', 0)
+                       + sortie.killboard_pve.get('aircraft_heavy', 0)) >= 1):
                 return True
 
 
@@ -316,7 +318,7 @@ def order_of_glory_2nd_class(sortie):
 # - сбить 1 самолет или 1 танк за боевой вылет
 def order_of_glory_3rd_class(sortie):
     if sortie.player.coal_pref == Coalition.Allies and not sortie.player.is_officer():
-        if sortie.score > 0 and (sortie.ak_total >= 1 or sortie.tanks_total):
+        if sortie.score > 0 and (sortie.ak_total >= 5 or sortie.tanks_total >= 10):
             return True
 
 
