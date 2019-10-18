@@ -148,8 +148,8 @@ class Tour(models.Model):
     is_ended = models.BooleanField(default=False)
 
     COALITIONS = (
-        (Coalition.Allies, pgettext_lazy('coalition', 'Allies')),
-        (Coalition.Axis, pgettext_lazy('coalition', 'Axis')),
+        (Coalition.coal_1, settings.COAL_1_NAME),
+        (Coalition.coal_2, settings.COAL_2_NAME),
     )
     winning_coalition = models.IntegerField(choices=COALITIONS, blank=True, null=True)
 
@@ -170,10 +170,10 @@ class Tour(models.Model):
 
     def update_winning_coalition(self):
         wins = self.missions_wins()
-        allies_wins, axis_wins = wins[1], wins[2]
-        if allies_wins > axis_wins:
+        coal_1_wins, coal_2_wins = wins[1], wins[2]
+        if coal_1_wins > coal_2_wins:
             self.winning_coalition = 1
-        elif allies_wins < axis_wins:
+        elif coal_1_wins < coal_2_wins:
             self.winning_coalition = 2
         else:
             self.winning_coalition = None
@@ -181,9 +181,10 @@ class Tour(models.Model):
     def missions_wins(self):
         wins = (self.missions.values('winning_coalition').order_by().annotate(num=Count('winning_coalition')))
         wins = {d['winning_coalition']: d['num'] for d in wins}
-        allies_wins = wins.get(1, 0)
-        axis_wins = wins.get(2, 0)
-        return {1: allies_wins, 2: axis_wins}
+        return {
+            1: wins.get(1, 0),
+            2: wins.get(2, 0)
+        }
 
     def stats_summary_total(self):
         summary_total = {'ak_total': 0, 'gk_total': 0, 'score': 0, 'flight_time': 0}
@@ -269,8 +270,8 @@ class Mission(models.Model):
     gunners_total = models.IntegerField(default=0)
 
     COALITIONS = (
-        (Coalition.Allies, pgettext_lazy('coalition', 'Allies')),
-        (Coalition.Axis, pgettext_lazy('coalition', 'Axis')),
+        (Coalition.coal_1, settings.COAL_1_NAME),
+        (Coalition.coal_2, settings.COAL_2_NAME),
     )
     winning_coalition = models.IntegerField(choices=COALITIONS, blank=True, null=True)
     WIN_REASONS = (
@@ -422,8 +423,8 @@ class Player(models.Model):
 
     COALITIONS = (
         (Coalition.neutral, pgettext_lazy('coalition', _('neutral'))),
-        (Coalition.Allies, pgettext_lazy('coalition', _('Allies'))),
-        (Coalition.Axis, pgettext_lazy('coalition', _('Axis'))),
+        (Coalition.coal_1, settings.COAL_1_NAME),
+        (Coalition.coal_2, settings.COAL_2_NAME),
     )
 
     coal_pref = models.IntegerField(default=Coalition.neutral, choices=COALITIONS)
@@ -777,8 +778,8 @@ class PlayerMission(models.Model):
 
     COALITIONS = (
         (Coalition.neutral, pgettext_lazy('coalition', _('neutral'))),
-        (Coalition.Allies, pgettext_lazy('coalition', _('Allies'))),
-        (Coalition.Axis, pgettext_lazy('coalition', _('Axis'))),
+        (Coalition.coal_1, settings.COAL_1_NAME),
+        (Coalition.coal_2, settings.COAL_2_NAME),
     )
 
     coal_pref = models.IntegerField(default=Coalition.neutral, choices=COALITIONS)
@@ -875,7 +876,7 @@ class PlayerMission(models.Model):
 
     def update_ratio(self):
         ratio = (Sortie.objects.filter(player_id=self.id, mission_id=self.mission_id)
-            .aggregate(ratio=Avg('ratio'))['ratio'])
+                 .aggregate(ratio=Avg('ratio'))['ratio'])
         if ratio:
             self.ratio = round(ratio, 2)
 
@@ -992,7 +993,7 @@ class PlayerAircraft(models.Model):
 
     def update_ratio(self):
         ratio = (Sortie.objects.filter(player_id=self.id, aircraft_id=self.aircraft_id)
-            .aggregate(ratio=Avg('ratio'))['ratio'])
+                 .aggregate(ratio=Avg('ratio'))['ratio'])
         if ratio:
             self.ratio = round(ratio, 2)
 
@@ -1015,8 +1016,8 @@ class VLife(models.Model):
 
     COALITIONS = (
         (Coalition.neutral, pgettext_lazy('coalition', _('neutral'))),
-        (Coalition.Allies, pgettext_lazy('coalition', _('Allies'))),
-        (Coalition.Axis, pgettext_lazy('coalition', _('Axis'))),
+        (Coalition.coal_1, settings.COAL_1_NAME),
+        (Coalition.coal_2, settings.COAL_2_NAME),
     )
 
     coal_pref = models.IntegerField(default=Coalition.neutral, choices=COALITIONS)
@@ -1184,16 +1185,16 @@ class VLife(models.Model):
 
     def update_ratio(self):
         ratio = (Sortie.objects.filter(player_id=self.id, vlife_id=self.id)
-            .aggregate(ratio=Avg('ratio'))['ratio'])
+                 .aggregate(ratio=Avg('ratio'))['ratio'])
         if ratio:
             self.ratio = round(ratio, 2)
 
     def update_coal_pref(self):
         if self.sorties_total:
-            allies = round(self.sorties_coal[1] * 100 / self.sorties_total, 0)
-            if allies > 60:
+            coal_1 = round(self.sorties_coal[1] * 100 / self.sorties_total, 0)
+            if coal_1 > 60:
                 self.coal_pref = 1
-            elif allies < 40:
+            elif coal_1 < 40:
                 self.coal_pref = 2
             else:
                 self.coal_pref = 0
@@ -1225,14 +1226,25 @@ class Sortie(models.Model):
 
     COALITIONS = (
         (Coalition.neutral, pgettext_lazy('coalition', _('neutral'))),
-        (Coalition.Allies, pgettext_lazy('coalition', _('Allies'))),
-        (Coalition.Axis, pgettext_lazy('coalition', _('Axis'))),
+        (Coalition.coal_1, settings.COAL_1_NAME),
+        (Coalition.coal_2, settings.COAL_2_NAME),
     )
 
     COUNTRIES = (
         (Country.neutral, pgettext_lazy('country', _('neutral'))),
         (Country.USSR, pgettext_lazy('country', _('USSR'))),
+        (Country.GreatBritain, pgettext_lazy('country', _('Great Britain'))),
+        (Country.USA, pgettext_lazy('country', _('USA'))),
         (Country.Germany, pgettext_lazy('country', _('Germany'))),
+        (Country.Italy, pgettext_lazy('country', _('Italy'))),
+        (Country.Japan, pgettext_lazy('country', _('Japan'))),
+        (Country.France, pgettext_lazy('country', _('France'))),
+        (Country.GreatBritainWW1, pgettext_lazy('country', _('Great Britain'))),
+        (Country.UnitedStatesWW1, pgettext_lazy('country', _('USA'))),
+        (Country.Belgium, pgettext_lazy('country', _('Belgium'))),
+        (Country.Russia, pgettext_lazy('country', _('Russia'))),
+        (Country.GermanyWW1, pgettext_lazy('country', _('Germany'))),
+        (Country.AustriaHungary, pgettext_lazy('country', _('Austria-Hungary'))),
     )
 
     coalition = models.IntegerField(default=Coalition.neutral, choices=COALITIONS)
@@ -1458,8 +1470,8 @@ class Squad(models.Model):
 
     COALITIONS = (
         (Coalition.neutral, pgettext_lazy('coalition', _('neutral'))),
-        (Coalition.Allies, pgettext_lazy('coalition', _('Allies'))),
-        (Coalition.Axis, pgettext_lazy('coalition', _('Axis'))),
+        (Coalition.coal_1, settings.COAL_1_NAME),
+        (Coalition.coal_2, settings.COAL_2_NAME),
     )
 
     coal_pref = models.IntegerField(default=Coalition.neutral, choices=COALITIONS)
@@ -1588,10 +1600,10 @@ class Squad(models.Model):
 
     def update_coal_pref(self):
         if self.sorties_total:
-            allies = round(self.sorties_coal[1] * 100 / self.sorties_total, 0)
-            if allies > 60:
+            coal_1 = round(self.sorties_coal[1] * 100 / self.sorties_total, 0)
+            if coal_1 > 60:
                 self.coal_pref = 1
-            elif allies < 40:
+            elif coal_1 < 40:
                 self.coal_pref = 2
             else:
                 self.coal_pref = 0
@@ -1660,8 +1672,8 @@ class PlayerOnline(models.Model):
     uuid = models.UUIDField(primary_key=True)
     nickname = models.CharField(max_length=128)
     COALITIONS = (
-        (Coalition.Allies, pgettext_lazy('coalition', 'Allies')),
-        (Coalition.Axis, pgettext_lazy('coalition', 'Axis')),
+        (Coalition.coal_1, settings.COAL_1_NAME),
+        (Coalition.coal_2, settings.COAL_2_NAME),
     )
     coalition = models.IntegerField(choices=COALITIONS)
     profile = models.ForeignKey(Profile, blank=True, null=True, on_delete=models.CASCADE)

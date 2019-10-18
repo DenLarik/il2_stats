@@ -1,16 +1,19 @@
 from datetime import timedelta
 
 from django.conf import settings
-from django.db.models import Q, Sum
+from django.db.models import Q, Count, Sum
 from django.http import Http404
 from django.shortcuts import render, get_object_or_404, redirect, render_to_response
 from django.utils import timezone
-from mission_report.constants import Coalition
 
-from . import sortie_log
+from mission_report.constants import Coalition, Country
+from squads.models import Squad as SquadProfile
+
 from .helpers import Paginator, get_sort_by, redirect_fix_url
 from .models import (Player, Mission, PlayerMission, PlayerAircraft, Sortie, KillboardPvP,
                      Tour, LogEntry, Profile, Squad, Reward, PlayerOnline, VLife, Award, CurrentMission)
+from . import sortie_log
+
 
 INACTIVE_PLAYER_DAYS = settings.INACTIVE_PLAYER_DAYS
 ITEMS_PER_PAGE = 20
@@ -112,8 +115,8 @@ def squad_rankings(request):
 def pilot_rankings(request):
     page = request.GET.get('page', 1)
     search = request.GET.get('search', '').strip()
-    sort_by = get_sort_by(request=request, sort_fields=pilots_sort_fields, default='-rank')
-    players = Player.players.pilots(tour_id=request.tour.id).order_by(sort_by, '-rating')
+    sort_by = get_sort_by(request=request, sort_fields=pilots_sort_fields, default='-rating')
+    players = Player.players.pilots(tour_id=request.tour.id).order_by(sort_by, 'id')
     if search:
         players = players.search(name=search)
     else:
@@ -368,9 +371,9 @@ def main(request):
     else:
         previous_tour_top = None
 
-    allies_online = PlayerOnline.objects.filter(coalition=Coalition.Allies).count()
-    axis_online = PlayerOnline.objects.filter(coalition=Coalition.Axis).count()
-    total_online = allies_online + axis_online
+    coal_1_online = PlayerOnline.objects.filter(coalition=Coalition.coal_1).count()
+    coal_2_online = PlayerOnline.objects.filter(coalition=Coalition.coal_2).count()
+    total_online = coal_1_online + coal_2_online
 
     try:
         current_mission = CurrentMission.objects.all()[0]
@@ -390,8 +393,8 @@ def main(request):
         'previous_tour': previous_tour,
         'previous_tour_top': previous_tour_top,
         'total_online': total_online,
-        'allies_online': allies_online,
-        'axis_online': axis_online,
+        'coal_1_online': coal_1_online,
+        'coal_2_online': coal_2_online,
         'current_mission': current_mission
     })
 
@@ -404,6 +407,8 @@ def current_mission(request):
 
     return render_to_response('current_mission.html', {
         'current_mission': current
+        'coal_1_online': coal_1_online,
+        'coal_2_online': coal_2_online,
     })
 
 
@@ -439,20 +444,20 @@ def tour(request):
 
 
 def online(request):
-    players_allies = PlayerOnline.objects.filter(coalition=Coalition.Allies).order_by('nickname')
-    players_axis = PlayerOnline.objects.filter(coalition=Coalition.Axis).order_by('nickname')
+    players_coal_1 = PlayerOnline.objects.filter(coalition=Coalition.coal_1).order_by('nickname')
+    players_coal_2 = PlayerOnline.objects.filter(coalition=Coalition.coal_2).order_by('nickname')
 
-    total_allies = len(players_allies)
-    total_axis = len(players_axis)
-    total_players = total_allies + total_axis
+    total_coal_1 = len(players_coal_1)
+    total_coal_2 = len(players_coal_2)
+    total_players = total_coal_1 + total_coal_2
 
     return render(request, 'online.html', {
         'tour': request.tour,
-        'players_allies': players_allies,
-        'players_axis': players_axis,
+        'players_coal_1': players_coal_1,
+        'players_coal_2': players_coal_2,
         'total_players': total_players,
-        'total_allies': total_allies,
-        'total_axis': total_axis,
+        'total_coal_1': total_coal_1,
+        'total_coal_2': total_coal_2,
     })
 
 
