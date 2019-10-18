@@ -407,8 +407,6 @@ def current_mission(request):
 
     return render_to_response('current_mission.html', {
         'current_mission': current
-        'coal_1_online': coal_1_online,
-        'coal_2_online': coal_2_online,
     })
 
 

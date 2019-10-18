@@ -149,7 +149,7 @@
         };
 
         $(document).ready(function() {
-            uri_sort_by('-rank', sort_by_text);
+            uri_sort_by('-rating', sort_by_text);
             var paginator = new Paginator('paginator', {{ players.paginator.num_pages }}, 15, {{ players.number }}, uri_paginator);
         });
     </script>
