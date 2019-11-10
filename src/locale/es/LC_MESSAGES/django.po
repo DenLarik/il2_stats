@@ -66,30 +66,6 @@ msgctxt "coalition"
 msgid "Central Powers"
 msgstr ""
 
-#: .\core\settings.py:354 .\custom\templates\inline\table_coal_pref_icon.html:4
-#: .\custom\templates\inline\table_coal_pref_icon.html:5
-#: .\custom\templates\main.html:189 .\custom\templates\missions.html:58
-#: .\custom\templates\missions.html:59 .\custom\templates\pilot.html:22
-#: .\custom\templates\pilot.html:23 .\custom\templates\pilot.html:414
-#: .\custom\templates\squad.html:19 .\custom\templates\squad.html:20
-#: .\custom\templates\squad.html:373 .\custom\templates\squad_pilots.html:19
-#: .\custom\templates\squad_pilots.html:20
-msgctxt "coalition"
-msgid "Allies"
-msgstr "Aliados"
-
-#: .\core\settings.py:355 .\custom\templates\inline\table_coal_pref_icon.html:8
-#: .\custom\templates\inline\table_coal_pref_icon.html:9
-#: .\custom\templates\main.html:193 .\custom\templates\missions.html:62
-#: .\custom\templates\missions.html:63 .\custom\templates\pilot.html:27
-#: .\custom\templates\pilot.html:28 .\custom\templates\pilot.html:425
-#: .\custom\templates\squad.html:23 .\custom\templates\squad.html:24
-#: .\custom\templates\squad.html:384 .\custom\templates\squad_pilots.html:23
-#: .\custom\templates\squad_pilots.html:24
-msgctxt "coalition"
-msgid "Axis"
-msgstr "Eje"
-
 #: .\custom\templates\current_mission.html:6 .\stats\models.py:1698
 msgid "current mission"
 msgstr "misión actual"

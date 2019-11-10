@@ -2117,15 +2117,15 @@ section#my_squad .wrapper .members_table .row .cell.red:hover {
   text-align: left;
   padding-left: 20px;
 }
-.online_allies,
-.online_axis {
+.online_coal_1,
+.online_coal_2 {
   display: inline-block;
   width: 49%;
 }
-.online_axis {
+.online_coal_1 {
   float: right;
 }
-.online_axis .header:after {
+.online_coal_1 .header:after {
   background-color: #3166CE;
 }
 footer {
