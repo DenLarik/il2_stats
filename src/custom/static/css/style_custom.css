@@ -1,0 +1,19 @@
+.profile_head .head_right .rank {
+  font-size: 20px;
+  margin-bottom: 40px;
+  width: 400px;
+}
+.profile_head .head_right .rank_desc {
+  font-size: 12px;
+  text-align: right;
+  width: 390px;
+}
+.profile_head .head_right .squad_logo {
+  max-width: 600px;
+}
+.profile_head .head_right .squad_logo img {
+  margin-left: 30px;
+}
+.pilot_awards .award {
+  display: inline-table;
+}

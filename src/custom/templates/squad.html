@@ -15,15 +15,15 @@
             <div class="profile_head">
                 <div class="head_left">
                     {% if squad.coal_pref == 1 %}
-                        <img src="{% static 'img/flag/coal_1.png' %}" width="140" height="70" class="coal_flag"
+                        <img src="{% static 'img/flag/coal_1.png' %}" width="" height="" class="coal_flag"
                              title="{{ COAL_1_NAME }}" alt="{{ COAL_1_NAME }}" align="left">
                         <div class="coalition">{% trans 'favorite coalition' %}: <span>{{ COAL_1_NAME }}</span></div>
                     {% elif squad.coal_pref == 2 %}
-                        <img src="{% static 'img/flag/coal_2.png' %}" width="140" height="70" class="coal_flag"
+                        <img src="{% static 'img/flag/coal_2.png' %}" width="" height="" class="coal_flag"
                              title="{{ COAL_2_NAME }}" alt="{{ COAL_2_NAME }}" align="left">
-                        <div class="coalition">{% trans 'favorite coalition' %}: <span>{{ COAL_2_NAME }}</div>
+                        <div class="coalition">{% trans 'favorite coalition' %}: <span>{{ COAL_2_NAME }}</span></div>
                     {% else %}
-                        <img src="{% static 'img/flag/neutral.png' %}" width="140" height="70" class="coal_flag"
+                        <img src="{% static 'img/flag/neutral.png' %}" width="" height="" class="coal_flag"
                              title="{% trans 'No' context 'favorite_coalition' %}" alt="{% trans 'No' context 'favorite_coalition' %}" align="left">
                         <div class="coalition">{% trans 'favorite coalition' %}: <span>{% trans 'No' context 'favorite_coalition' %}</span></div>
                     {% endif %}
@@ -82,7 +82,7 @@
                 </div>
                 <div class="item">
                     <img src="{% static 'img/icons/big/rating.png' %}" width="" height="" title="" alt="">
-                    <div class="text">{% trans 'Ranking' %}</div>
+                    <div class="text">{% trans 'Position in Rating' %}</div>
                     <div class="num" title="{{ squad.rating }}">
                         {% if rating_position %}
                             <a href="{% url 'stats:squads' %}?page={{ page_position }}&tour={{ squad.tour_id }}">{{ rating_position }}</a>
@@ -233,6 +233,13 @@
                 </div>
                 {% endif %}
 
+                {% if squad.killboard_pve.aerostat %}
+                <div class="sub_item">
+                    <div class="name">{% trans 'Aerostats' context 'total' %}</div>
+                    <div class="num">{{ squad.killboard_pve.aerostat }}</div>
+                </div>
+                {% endif %}
+
                 {% if squad.killboard_pve.searchlight %}
                 <div class="sub_item">
                     <div class="name">{% trans 'Searchlights' context 'total' %}</div>
@@ -277,8 +284,29 @@
 
                 {% if squad.killboard_pve.ship %}
                 <div class="sub_item">
-                    <div class="name">{% trans 'Ships' context 'total' %}</div>
+                    <div class="name">{% trans 'Ships' context 'total' %} ({% trans 'outdated parameter' %})</div>
                     <div class="num">{{ squad.killboard_pve.ship }}</div>
+                </div>
+                {% endif %}
+
+                {% if squad.killboard_pve.ship_heavy %}
+                <div class="sub_item">
+                    <div class="name">{% trans 'Heavy Ships' context 'total' %}</div>
+                    <div class="num">{{ squad.killboard_pve.ship_heavy }}</div>
+                </div>
+                {% endif %}
+
+                {% if squad.killboard_pve.ship_medium %}
+                <div class="sub_item">
+                    <div class="name">{% trans 'Medium Ships' context 'total' %}</div>
+                    <div class="num">{{ squad.killboard_pve.ship_medium }}</div>
+                </div>
+                {% endif %}
+
+                {% if squad.killboard_pve.ship_light %}
+                <div class="sub_item">
+                    <div class="name">{% trans 'Light Ships' context 'total' %}</div>
+                    <div class="num">{{ squad.killboard_pve.ship_light }}</div>
                 </div>
                 {% endif %}
 
@@ -314,6 +342,27 @@
                 <div class="sub_item">
                     <div class="name">{% trans 'Industrial Objects' context 'total' %}</div>
                     <div class="num">{{ squad.killboard_pve.industrial }}</div>
+                </div>
+                {% endif %}
+
+                {% if squad.killboard_pve.building_big %}
+                <div class="sub_item">
+                    <div class="name">{% trans 'Big buildings' context 'total' %}</div>
+                    <div class="num">{{ squad.killboard_pve.building_big }}</div>
+                </div>
+                {% endif %}
+
+                {% if squad.killboard_pve.building_medium %}
+                <div class="sub_item">
+                    <div class="name">{% trans 'Medium buildings' context 'total' %}</div>
+                    <div class="num">{{ squad.killboard_pve.building_medium }}</div>
+                </div>
+                {% endif %}
+
+                {% if squad.killboard_pve.building_small %}
+                <div class="sub_item">
+                    <div class="name">{% trans 'Small buildings' context 'total' %}</div>
+                    <div class="num">{{ squad.killboard_pve.building_small }}</div>
                 </div>
                 {% endif %}
 
@@ -425,6 +474,17 @@
                             <div class="name">{% trans 'Bombers' context 'specialty' %}</div>
                             <div class="desc">{% trans 'number of sorties' %}: {{ squad.sorties_cls.aircraft_heavy }}</div>
                             {% widthratio squad.sorties_cls.aircraft_heavy squad.sorties_total 100 as width %}
+                            <div class="pct">{{ width|floatformat:'0' }}%</div>
+                            <div class="bar">
+                                <div class="progress yellow" style="width: {{ width }}%;"></div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if squad.sorties_cls.aircraft_transport %}
+                        <div class="item">
+                            <div class="name">{% trans 'Transport' context 'specialty' %}</div>
+                            <div class="desc">{% trans 'number of sorties' %}: {{ squad.sorties_cls.aircraft_transport }}</div>
+                            {% widthratio squad.sorties_cls.aircraft_transport squad.sorties_total 100 as width %}
                             <div class="pct">{{ width|floatformat:'0' }}%</div>
                             <div class="bar">
                                 <div class="progress yellow" style="width: {{ width }}%;"></div>

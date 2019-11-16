@@ -106,13 +106,10 @@
 {#                            - {{ m }}<br>#}
 {#                        {% endfor %}#}
                     {% endif %}
-
-                    {% with 'img/aircraft/'|add:sortie.aircraft.log_name|add:'.png' as sortie_aircraft_img %}
-                        <img src="{% static sortie_aircraft_img %}" width="335" height="120"
-                             style="margin-top: 10px;"
-                             title="{% trans sortie.aircraft.name %}"
-                             alt="{% trans sortie.aircraft.name %}">
-                    {% endwith %}
+                    <img src="{{ sortie.aircraft.aircraft_image }}" width="335" height="120"
+                         style="margin-top: 10px;"
+                         title="{% trans sortie.aircraft.name %}"
+                         alt="{% trans sortie.aircraft.name %}">
                     <br>
                     {% trans 'aircraft status' context 'sortie' %}:
                     {% if sortie.is_not_takeoff %}
@@ -409,6 +406,20 @@
                     </div>
                 {% endif %}
 
+                {% if sortie.killboard_pve.aerostat %}
+                    <div class="sub_row">
+                        <div class="left">
+                            {% trans 'Aerostats' context 'total' %}
+                            <span>{{ sortie.killboard_pve.aerostat }}</span>
+                        </div>
+                        <div class="right score">
+                            {{ sortie.killboard_pve.aerostat }}
+                            &times;
+                            {{ score_dict.aerostat }}
+                        </div>
+                    </div>
+                {% endif %}
+
                 {% if sortie.killboard_pve.searchlight %}
                     <div class="sub_row">
                         <div class="left">
@@ -503,6 +514,48 @@
                             {{ sortie.killboard_pve.ship }}
                             &times;
                             {{ score_dict.ship }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if sortie.killboard_pve.ship_heavy %}
+                    <div class="sub_row">
+                        <div class="left">
+                            {% trans 'Heavy Ships' context 'total' %}
+                            <span>{{ sortie.killboard_pve.ship_heavy }}</span>
+                        </div>
+                        <div class="right score">
+                            {{ sortie.killboard_pve.ship_heavy }}
+                            &times;
+                            {{ score_dict.ship_heavy }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if sortie.killboard_pve.ship_medium %}
+                    <div class="sub_row">
+                        <div class="left">
+                            {% trans 'Medium Ships' context 'total' %}
+                            <span>{{ sortie.killboard_pve.ship_medium }}</span>
+                        </div>
+                        <div class="right score">
+                            {{ sortie.killboard_pve.ship_medium }}
+                            &times;
+                            {{ score_dict.ship_medium }}
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if sortie.killboard_pve.ship_light %}
+                    <div class="sub_row">
+                        <div class="left">
+                            {% trans 'Light Ships' context 'total' %}
+                            <span>{{ sortie.killboard_pve.ship_light }}</span>
+                        </div>
+                        <div class="right score">
+                            {{ sortie.killboard_pve.ship_light }}
+                            &times;
+                            {{ score_dict.ship_light }}
                         </div>
                     </div>
                 {% endif %}
@@ -621,7 +674,11 @@
                             {% trans 'Bonuses' context 'total' %}
                         </div>
                         <div class="right">
-                            <span class="bonus">+ {{ sortie.bonus.total }}%</span>
+                            {{ sortie.score_dict.basic }}
+                            +
+                            <span class="bonus">{{ sortie.bonus.total }}%</span>
+                            =
+                            <span class="sum">{{ sortie.score }}</span>
                         </div>
                     </div>
 
