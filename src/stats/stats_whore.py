@@ -200,38 +200,7 @@ def stats_whore(m_report_file):
     )
     if m_report.winning_coal_id:
         mission.winning_coalition = m_report.winning_coal_id
-        if m_report.winning_coal_type == 0:
-            mission.win_reason = 'task'
-        elif m_report.winning_coal_type == 1:
-            mission.win_reason = 'task1'
-        elif m_report.winning_coal_type == 2:
-            mission.win_reason = 'task2'
-        elif m_report.winning_coal_type == 3:
-            mission.win_reason = 'task3'
-        elif m_report.winning_coal_type == 4:
-            mission.win_reason = 'task4'
-        elif m_report.winning_coal_type == 5:
-            mission.win_reason = 'task5'
-        elif m_report.winning_coal_type == 6:
-            mission.win_reason = 'task6'
-        elif m_report.winning_coal_type == 7:
-            mission.win_reason = 'task7'
-        elif m_report.winning_coal_type == 8:
-            mission.win_reason = 'task8'
-        elif m_report.winning_coal_type == 9:
-            mission.win_reason = 'task9'
-        elif m_report.winning_coal_type == 10:
-            mission.win_reason = 'task10'
-        elif m_report.winning_coal_type == 11:
-            mission.win_reason = 'task11'
-        elif m_report.winning_coal_type == 12:
-            mission.win_reason = 'task12'
-        elif m_report.winning_coal_type == 13:
-            mission.win_reason = 'task13'
-        elif m_report.winning_coal_type == 14:
-            mission.win_reason = 'task14'
-        elif m_report.winning_coal_type == 15:
-            mission.win_reason = 'task15'
+        mission.win_reason = 'task'
         mission.save()
 
     # собираем/создаем профили игроков и сквадов

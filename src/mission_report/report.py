@@ -53,6 +53,7 @@ class MissionReport:
         self.lines = []
         self.winning_coal_id = None
         self.winning_coal_type = None
+        # self.online_uuid = set()
         self.log_entries = []
 
         # словари вылетов для которых не нашлось объекта - поздняя инициализация
@@ -445,7 +446,7 @@ class MissionReport:
             if not (sortie.is_ended or sortie.is_bailout or (not sortie.aircraft) or sortie.aircraft.on_ground):
                 sortie.is_disco = True
 
-    def event_tank_travel(self, tik, parent_id, pos):
+    def event_tank_travel(self, tik, tank_id, pos):
         pass
 
 

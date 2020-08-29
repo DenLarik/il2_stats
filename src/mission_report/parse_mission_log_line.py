@@ -3,6 +3,9 @@ from datetime import datetime
 import functools
 import re
 import unicodedata
+import logging
+
+from .constants import GAME_CLASSES
 
 
 class UnexpectedATypeWarning(Warning):
@@ -131,7 +134,7 @@ atype_21 = re.compile(r'^T:(?P<tik>\d+) AType:21 USERID:(?P<account_id>[-\w]{36}
 
 # начало движения танка
 # T:36160 AType:22 PID:1684580 POS(223718.406, 10.337, 242309.250)
-atype_22 = re.compile(r'^T:(?P<tik>\d+) AType:22 PID:(?P<parent_id>[-\d]+) POS\((?P<pos>.+)\)$')
+atype_22 = re.compile(r'^T:(?P<tik>\d+) AType:22 PID:(?P<tank_id>[-\d]+) POS\((?P<pos>.+)\)$')
 
 
 atype_handlers = [
@@ -149,7 +152,11 @@ def pos_handler(pos):
     """
     if re_pos.match(pos.strip()):
         pos = tuple(map(float, pos.split(',')))
-        return dict(zip(['x', 'y', 'z'], pos))
+        res = dict(zip(['x', 'y', 'z'], pos))
+        if res['z'] == float('-inf') or res['z'] == float('inf'):
+            logging.info('z={}'.format(res['z']))
+            res['z'] = 0
+        return res
     else:
         return None
 
@@ -159,20 +166,8 @@ def object_name_handler(type_):
     """
     :type type_: str
     """
-    if 'CParachute_' in type_:
-        return 'CParachute'
-    elif 'CStaticEmitter_' in type_:
-        return 'CStaticEmitter'
-    elif 'CBotCharacter_' in type_:
-        return 'CBotCharacter'
-    elif 'CFlareGun_' in type_:
-        return 'CFlareGun'
-    elif 'CAeroplaneFragment_' in type_:
-        return 'CAeroplaneFragment'
-    elif 'CBlocksArray_' in type_:
-        return 'CBlocksArray'
-    elif 'CTurretCamera_' in type_:
-        return 'CTurretCamera'
+    if type_.startswith(GAME_CLASSES):
+        return type_.split('_')[0]
     else:
         return type_
 
@@ -196,6 +191,7 @@ params_handlers = {
     'group_id': int,
     'object_id': int,
     'area_id': int,
+    'tank_id': int,
 
     'attacker_id': lambda s: int(s) if s != '-1' else None,
     'aircraft_id_list': lambda s: list(map(int, s.split(','))) if s else [],

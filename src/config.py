@@ -68,7 +68,6 @@ def get_conf():
         conf['stats']['mission_report_path'] = text_log_folder
     return conf
 
-
 conf = get_conf()
 
 HTTP_HOST = conf['http']['host']
