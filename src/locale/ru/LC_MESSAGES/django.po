@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-08-29 10:56+0000\n"
+"POT-Creation-Date: 2020-09-13 15:08+0000\n"
 "PO-Revision-Date: 2016-03-19 20:51+0000\n"
 "Last-Translator: b'Anonymous User <vaal.87@gmail.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,7 +27,7 @@ msgstr ""
 msgid "A unique name for this chunk of content"
 msgstr ""
 
-#: chunks/models.py:8 stats/models.py:234 stats/models.py:1627
+#: chunks/models.py:8 stats/models.py:234 stats/models.py:1630
 msgid "title"
 msgstr "название"
 
@@ -75,7 +75,7 @@ msgctxt "coalition"
 msgid "Axis"
 msgstr "Страны оси"
 
-#: custom/templates/current_mission.html:6 stats/models.py:1684
+#: custom/templates/current_mission.html:6 stats/models.py:1687
 msgid "current mission"
 msgstr "текущая миссия"
 
@@ -99,26 +99,30 @@ msgctxt "tour"
 msgid "Won missions"
 msgstr "Побед в миссиях"
 
-#: custom/templates/main.html:38 stats/templates/main.html:38
-#: stats/templates/mission.html:41 stats/templates/tour.html:40
+#: custom/templates/main.html:38 custom/templates/mission.html:47
+#: stats/templates/main.html:38 stats/templates/mission.html:41
+#: stats/templates/tour.html:40
 msgctxt "tour"
 msgid "Shotdown aircraft"
 msgstr "Сбили самолетов"
 
-#: custom/templates/main.html:56 stats/templates/main.html:56
-#: stats/templates/mission.html:59 stats/templates/tour.html:58
+#: custom/templates/main.html:56 custom/templates/mission.html:65
+#: stats/templates/main.html:56 stats/templates/mission.html:59
+#: stats/templates/tour.html:58
 msgctxt "tour"
 msgid "Ground targets destroyed"
 msgstr "Уничтожили наземных целей"
 
-#: custom/templates/main.html:74 stats/templates/main.html:74
-#: stats/templates/mission.html:77 stats/templates/tour.html:76
+#: custom/templates/main.html:74 custom/templates/mission.html:83
+#: stats/templates/main.html:74 stats/templates/mission.html:77
+#: stats/templates/tour.html:76
 msgctxt "tour"
 msgid "Score"
 msgstr "Очков"
 
-#: custom/templates/main.html:93 stats/templates/main.html:93
-#: stats/templates/mission.html:95 stats/templates/tour.html:94
+#: custom/templates/main.html:93 custom/templates/mission.html:101
+#: stats/templates/main.html:93 stats/templates/mission.html:95
+#: stats/templates/tour.html:94
 msgctxt "tour"
 msgid "Flight time (hours)"
 msgstr "Налет часов"
@@ -210,6 +214,183 @@ msgstr "победитель"
 msgid "Top Pilots"
 msgstr "Лучшие пилоты"
 
+#: custom/templates/mission.html:3 custom/templates/mission.html:13
+#: stats/templates/mission.html:3 stats/templates/mission.html:13
+msgid "Mission"
+msgstr "Миссия"
+
+#: custom/templates/mission.html:19 stats/templates/mission.html:19
+msgctxt "mission"
+msgid "Start Date"
+msgstr "Начало миссии"
+
+#: custom/templates/mission.html:20 stats/templates/mission.html:20
+msgctxt "mission"
+msgid "End Date"
+msgstr "Окончание миссии"
+
+#: custom/templates/mission.html:21 stats/templates/mission.html:21
+msgctxt "mission"
+msgid "Duration"
+msgstr "Продолжительность"
+
+#: custom/templates/mission.html:23 custom/templates/missions.html:38
+#: stats/templates/mission.html:23 stats/templates/missions.html:38
+msgid "Winning coalition"
+msgstr "Победившая коалиция"
+
+#: custom/templates/mission.html:25 custom/templates/missions.html:69
+#: custom/templates/missions.html:70 stats/templates/mission.html:25
+#: stats/templates/missions.html:69 stats/templates/missions.html:70
+msgid "Performed the task of the mission"
+msgstr "Выполнены задачи миссии"
+
+#: custom/templates/mission.html:27 custom/templates/missions.html:74
+#: custom/templates/missions.html:75
+msgid "Won by planes"
+msgstr "Победа по самолетам"
+
+#: custom/templates/mission.html:29 custom/templates/missions.html:79
+#: custom/templates/missions.html:80
+msgid "Secret task performed"
+msgstr "Выполненая скрытая миссия"
+
+#: custom/templates/mission.html:31 custom/templates/missions.html:84
+#: custom/templates/missions.html:85
+#, fuzzy
+#| msgid "Performed the task of the mission"
+msgid "Performed the task of the mission3"
+msgstr "Выполнены задачи миссии"
+
+#: custom/templates/mission.html:33 custom/templates/missions.html:89
+#: custom/templates/missions.html:90 stats/templates/mission.html:27
+#: stats/templates/missions.html:74 stats/templates/missions.html:75
+msgid "Won by score"
+msgstr "Победа по очкам"
+
+#: custom/templates/mission.html:36 custom/templates/missions.html:32
+#: stats/templates/mission.html:30 stats/templates/missions.html:32
+msgid "Pilots total"
+msgstr "Всего пилотов"
+
+#: custom/templates/mission.html:125 custom/templates/pilots.html:3
+#: custom/templates/pilots.html:13 stats/templates/base.html:85
+#: stats/templates/mission.html:119 stats/templates/pilots.html:3
+#: stats/templates/pilots.html:13
+msgid "Pilot Rankings"
+msgstr "Рейтинг пилотов"
+
+#: custom/templates/mission.html:138 custom/templates/pilots.html:39
+#: custom/templates/squad_pilots.html:71 stats/templates/mission.html:132
+#: stats/templates/pilot_sorties.html:33 stats/templates/pilot_vlifes.html:35
+#: stats/templates/pilots.html:33 stats/templates/squad_pilots.html:56
+#: stats/templates/squads.html:38
+msgid "Air Kills"
+msgstr "Сбил самолетов"
+
+#: custom/templates/mission.html:144 custom/templates/pilots.html:51
+#: custom/templates/squad_pilots.html:83 stats/templates/mission.html:138
+#: stats/templates/pilot_sorties.html:37 stats/templates/pilot_vlifes.html:39
+#: stats/templates/pilots.html:45 stats/templates/squad_pilots.html:68
+#: stats/templates/squads.html:44
+msgid "Ground Kills"
+msgstr "Уничтожил наземной техники"
+
+#: custom/templates/mission.html:150 custom/templates/mission.html:151
+#: custom/templates/pilots.html:57 custom/templates/squad_pilots.html:89
+#: stats/templates/mission.html:144 stats/templates/mission.html:145
+#: stats/templates/pilots.html:51 stats/templates/squad_pilots.html:74
+#: stats/templates/squads.html:50
+msgid "Flight Time (hours:minutes)"
+msgstr "Налет (часы:минуты)"
+
+#: custom/templates/mission.html:169 custom/templates/pilot.html:103
+#: custom/templates/pilots.html:75 custom/templates/squad_pilots.html:107
+#: stats/templates/mission.html:163 stats/templates/pilot.html:93
+#: stats/templates/pilot_sortie.html:740 stats/templates/pilot_vlife.html:74
+#: stats/templates/pilots.html:69 stats/templates/squad_pilots.html:92
+msgid "Gunnery Accuracy"
+msgstr "Точность стрельбы"
+
+#: custom/templates/mission.html:175 stats/templates/mission.html:169
+#: stats/templates/pilot_sorties.html:41 stats/templates/pilot_vlife.html:79
+#: stats/templates/pilot_vlifes.html:43
+msgid "Score"
+msgstr "Очки"
+
+#: custom/templates/mission.html:198 custom/templates/pilot.html:717
+#: custom/templates/pilots.html:116 stats/templates/mission.html:192
+#: stats/templates/pilot.html:707 stats/templates/pilots.html:104
+msgid ""
+"<strong>Attention!</strong> Algorithms collection statistics IL2 stats "
+"differs from statistics in-game. As a consequence of these statistics will "
+"not coincide with the game."
+msgstr ""
+"<strong>Внимание!</strong> Алгоритмы сбора статистики IL2 stats отличаются "
+"от статистики в игре. Как следствие данная статистика не будет совпадать с "
+"игровой."
+
+#: custom/templates/mission.html:213 custom/templates/pilots.html:139
+#: stats/templates/mission.html:207 stats/templates/pilots.html:127
+#: stats/templates/squads.html:107
+msgid "on the number of air kills"
+msgstr "по количеству сбитых"
+
+#: custom/templates/mission.html:214 custom/templates/pilots.html:140
+#: stats/templates/mission.html:208 stats/templates/pilots.html:128
+msgid "on the current streak of kills"
+msgstr "по текущему стрику"
+
+#: custom/templates/mission.html:215 custom/templates/pilots.html:141
+#: stats/templates/mission.html:209 stats/templates/pilots.html:129
+#: stats/templates/squads.html:108
+msgid "on the number of ground kills"
+msgstr "по количеству уничтоженных наземных целей"
+
+#: custom/templates/mission.html:216 custom/templates/pilots.html:142
+#: stats/templates/mission.html:210 stats/templates/pilots.html:130
+#: stats/templates/squads.html:109
+msgid "on the flight time (hours:minutes)"
+msgstr "по налету (часы:минуты)"
+
+#: custom/templates/mission.html:217 custom/templates/pilots.html:143
+#: stats/templates/mission.html:211 stats/templates/pilots.html:131
+#: stats/templates/squads.html:110
+msgid "on the average number of kill per one death (K/D)"
+msgstr "по среднему количеству сбитых на одну смерть (K/D)"
+
+#: custom/templates/mission.html:218 custom/templates/pilots.html:144
+#: stats/templates/mission.html:212 stats/templates/pilots.html:132
+#: stats/templates/squads.html:111
+msgid "on the average number of kill per one hour (K/Hr)"
+msgstr "по среднему количеству сбитых в час (K/Hr)"
+
+#: custom/templates/mission.html:219 custom/templates/pilots.html:145
+#: stats/templates/mission.html:213 stats/templates/pilots.html:133
+msgid "on the accuracy"
+msgstr "по точности стрельбы"
+
+#: custom/templates/mission.html:221 stats/templates/mission.html:215
+msgid "on the score"
+msgstr "по очкам"
+
+#: custom/templates/missions.html:3 custom/templates/missions.html:14
+#: stats/templates/base.html:89 stats/templates/missions.html:3
+#: stats/templates/missions.html:14
+msgid "Missions"
+msgstr "Миссии"
+
+#: custom/templates/missions.html:19 stats/templates/missions.html:19
+msgid "Search mission"
+msgstr "Найти миссию"
+
+#: custom/templates/missions.html:44 custom/templates/missions.html:45
+#: stats/templates/missions.html:44 stats/templates/missions.html:45
+#: stats/templates/pilot_sorties.html:28 stats/templates/pilot_sorties.html:29
+#: stats/templates/pilot_vlifes.html:30 stats/templates/pilot_vlifes.html:31
+msgid "Duration (hours:minutes)"
+msgstr "Продолжительность (часы:минуты)"
+
 #: custom/templates/pilot.html:23 custom/templates/pilot.html:28
 #: custom/templates/pilot.html:33 custom/templates/squad.html:20
 #: custom/templates/squad.html:24 custom/templates/squad.html:28
@@ -291,14 +472,6 @@ msgstr "Лучший стрик по Н.Ц."
 #: stats/templates/squad.html:71
 msgid "Flight Time"
 msgstr "Налет"
-
-#: custom/templates/pilot.html:103 custom/templates/pilots.html:75
-#: custom/templates/squad_pilots.html:107 stats/templates/mission.html:163
-#: stats/templates/pilot.html:93 stats/templates/pilot_sortie.html:740
-#: stats/templates/pilot_vlife.html:74 stats/templates/pilots.html:69
-#: stats/templates/squad_pilots.html:92
-msgid "Gunnery Accuracy"
-msgstr "Точность стрельбы"
 
 #: custom/templates/pilot.html:108 custom/templates/squad.html:85
 #: stats/templates/pilot.html:98 stats/templates/squad.html:76
@@ -797,18 +970,6 @@ msgstr "GK/H - Уничтожено в час"
 msgid "Other names of the pilot on this account"
 msgstr "Другие имена пилота на этом аккаунте"
 
-#: custom/templates/pilot.html:717 custom/templates/pilots.html:116
-#: stats/templates/mission.html:192 stats/templates/pilot.html:707
-#: stats/templates/pilots.html:104
-msgid ""
-"<strong>Attention!</strong> Algorithms collection statistics IL2 stats "
-"differs from statistics in-game. As a consequence of these statistics will "
-"not coincide with the game."
-msgstr ""
-"<strong>Внимание!</strong> Алгоритмы сбора статистики IL2 stats отличаются "
-"от статистики в игре. Как следствие данная статистика не будет совпадать с "
-"игровой."
-
 #: custom/templates/pilot.html:724 custom/templates/pilots.html:122
 #: stats/templates/pilot.html:714 stats/templates/pilots.html:110
 #, python-format
@@ -833,82 +994,20 @@ msgctxt "pilot_awards"
 msgid "pilot"
 msgstr "пилот"
 
-#: custom/templates/pilots.html:3 custom/templates/pilots.html:13
-#: stats/templates/base.html:85 stats/templates/mission.html:119
-#: stats/templates/pilots.html:3 stats/templates/pilots.html:13
-msgid "Pilot Rankings"
-msgstr "Рейтинг пилотов"
-
 #: custom/templates/pilots.html:19 stats/templates/pilots.html:19
 msgid "Search pilot"
 msgstr "Найти пилота"
-
-#: custom/templates/pilots.html:39 custom/templates/squad_pilots.html:71
-#: stats/templates/mission.html:132 stats/templates/pilot_sorties.html:33
-#: stats/templates/pilot_vlifes.html:35 stats/templates/pilots.html:33
-#: stats/templates/squad_pilots.html:56 stats/templates/squads.html:38
-msgid "Air Kills"
-msgstr "Сбил самолетов"
 
 #: custom/templates/pilots.html:45 custom/templates/squad_pilots.html:77
 #: stats/templates/pilots.html:39 stats/templates/squad_pilots.html:62
 msgid "Current Streak"
 msgstr "Текущий стрик"
 
-#: custom/templates/pilots.html:51 custom/templates/squad_pilots.html:83
-#: stats/templates/mission.html:138 stats/templates/pilot_sorties.html:37
-#: stats/templates/pilot_vlifes.html:39 stats/templates/pilots.html:45
-#: stats/templates/squad_pilots.html:68 stats/templates/squads.html:44
-msgid "Ground Kills"
-msgstr "Уничтожил наземной техники"
-
-#: custom/templates/pilots.html:57 custom/templates/squad_pilots.html:89
-#: stats/templates/mission.html:144 stats/templates/mission.html:145
-#: stats/templates/pilots.html:51 stats/templates/squad_pilots.html:74
-#: stats/templates/squads.html:50
-msgid "Flight Time (hours:minutes)"
-msgstr "Налет (часы:минуты)"
-
 #: custom/templates/pilots.html:81 custom/templates/squad_pilots.html:113
 #: stats/templates/pilots.html:75 stats/templates/squad_pilots.html:98
 #: stats/templates/squads.html:68
 msgid "Rating"
 msgstr "Рейтинг"
-
-#: custom/templates/pilots.html:139 stats/templates/mission.html:207
-#: stats/templates/pilots.html:127 stats/templates/squads.html:107
-msgid "on the number of air kills"
-msgstr "по количеству сбитых"
-
-#: custom/templates/pilots.html:140 stats/templates/mission.html:208
-#: stats/templates/pilots.html:128
-msgid "on the current streak of kills"
-msgstr "по текущему стрику"
-
-#: custom/templates/pilots.html:141 stats/templates/mission.html:209
-#: stats/templates/pilots.html:129 stats/templates/squads.html:108
-msgid "on the number of ground kills"
-msgstr "по количеству уничтоженных наземных целей"
-
-#: custom/templates/pilots.html:142 stats/templates/mission.html:210
-#: stats/templates/pilots.html:130 stats/templates/squads.html:109
-msgid "on the flight time (hours:minutes)"
-msgstr "по налету (часы:минуты)"
-
-#: custom/templates/pilots.html:143 stats/templates/mission.html:211
-#: stats/templates/pilots.html:131 stats/templates/squads.html:110
-msgid "on the average number of kill per one death (K/D)"
-msgstr "по среднему количеству сбитых на одну смерть (K/D)"
-
-#: custom/templates/pilots.html:144 stats/templates/mission.html:212
-#: stats/templates/pilots.html:132 stats/templates/squads.html:111
-msgid "on the average number of kill per one hour (K/Hr)"
-msgstr "по среднему количеству сбитых в час (K/Hr)"
-
-#: custom/templates/pilots.html:145 stats/templates/mission.html:213
-#: stats/templates/pilots.html:133
-msgid "on the accuracy"
-msgstr "по точности стрельбы"
 
 #: custom/templates/pilots.html:146
 #, fuzzy
@@ -6144,212 +6243,212 @@ msgstr "тур"
 msgid "tours"
 msgstr "туры"
 
-#: stats/models.py:285
+#: stats/models.py:288
 msgctxt "preset"
 msgid "custom"
 msgstr "кастом"
 
-#: stats/models.py:286
+#: stats/models.py:289
 msgctxt "preset"
 msgid "normal"
 msgstr "нормальный"
 
-#: stats/models.py:287
+#: stats/models.py:290
 msgctxt "preset"
 msgid "expert"
 msgstr "эксперт"
 
-#: stats/models.py:342
+#: stats/models.py:345
 msgid "profile"
 msgstr "профиль"
 
-#: stats/models.py:343
+#: stats/models.py:346
 msgid "profiles"
 msgstr "профили"
 
-#: stats/models.py:379 stats/models.py:380
+#: stats/models.py:382 stats/models.py:383
 msgid "ranks"
 msgstr "звания"
 
-#: stats/models.py:411 stats/models.py:766 stats/models.py:1004
-#: stats/models.py:1214 stats/models.py:1220 stats/models.py:1458
+#: stats/models.py:414 stats/models.py:769 stats/models.py:1007
+#: stats/models.py:1217 stats/models.py:1223 stats/models.py:1461
 #, fuzzy
 #| msgctxt "coalition"
 #| msgid "neutral"
 msgid "neutral"
 msgstr "нейтральная"
 
-#: stats/models.py:1042 stats/models.py:1249
+#: stats/models.py:1045 stats/models.py:1252
 msgctxt "sortie_status"
 msgid "landed"
 msgstr "посадка на аэродром"
 
-#: stats/models.py:1043 stats/models.py:1250
+#: stats/models.py:1046 stats/models.py:1253
 msgctxt "sortie_status"
 msgid "ditched"
 msgstr "посадка вне аэродрома"
 
-#: stats/models.py:1044 stats/models.py:1251
+#: stats/models.py:1047 stats/models.py:1254
 msgctxt "sortie_status"
 msgid "crashed"
 msgstr "разбился"
 
-#: stats/models.py:1045 stats/models.py:1252
+#: stats/models.py:1048 stats/models.py:1255
 msgctxt "sortie_status"
 msgid "shotdown"
 msgstr "сбит"
 
-#: stats/models.py:1046 stats/models.py:1253
+#: stats/models.py:1049 stats/models.py:1256
 msgctxt "sortie_status"
 msgid "not takeoff"
 msgstr "не взлетал"
 
-#: stats/models.py:1047 stats/models.py:1254
+#: stats/models.py:1050 stats/models.py:1257
 msgctxt "sortie_status"
 msgid "in flight"
 msgstr "в полете"
 
-#: stats/models.py:1053 stats/models.py:1260
+#: stats/models.py:1056 stats/models.py:1263
 #, fuzzy
 #| msgid "username"
 msgctxt "aircraft_status"
 msgid "unharmed"
 msgstr "имя пользователя"
 
-#: stats/models.py:1054 stats/models.py:1261
+#: stats/models.py:1057 stats/models.py:1264
 msgctxt "aircraft_status"
 msgid "damaged"
 msgstr ""
 
-#: stats/models.py:1055 stats/models.py:1262
+#: stats/models.py:1058 stats/models.py:1265
 msgctxt "aircraft_status"
 msgid "destroyed"
 msgstr ""
 
-#: stats/models.py:1061 stats/models.py:1268
+#: stats/models.py:1064 stats/models.py:1271
 msgctxt "sortie_status"
 msgid "healthy"
 msgstr "здоров"
 
-#: stats/models.py:1062 stats/models.py:1269
+#: stats/models.py:1065 stats/models.py:1272
 msgctxt "sortie_status"
 msgid "wounded"
 msgstr "ранен"
 
-#: stats/models.py:1063 stats/models.py:1270
+#: stats/models.py:1066 stats/models.py:1273
 msgctxt "sortie_status"
 msgid "dead"
 msgstr "погиб"
 
-#: stats/models.py:1221
+#: stats/models.py:1224
 msgid "USSR"
 msgstr "СССР"
 
-#: stats/models.py:1222 stats/models.py:1228
+#: stats/models.py:1225 stats/models.py:1231
 msgid "Great Britain"
 msgstr ""
 
-#: stats/models.py:1223 stats/models.py:1229
+#: stats/models.py:1226 stats/models.py:1232
 msgid "USA"
 msgstr ""
 
-#: stats/models.py:1224 stats/models.py:1232
+#: stats/models.py:1227 stats/models.py:1235
 msgid "Germany"
 msgstr "Германия"
 
-#: stats/models.py:1225
+#: stats/models.py:1228
 msgid "Italy"
 msgstr ""
 
-#: stats/models.py:1226
+#: stats/models.py:1229
 msgid "Japan"
 msgstr ""
 
-#: stats/models.py:1227
+#: stats/models.py:1230
 #, fuzzy
 #| msgid "French"
 msgid "France"
 msgstr "Французский"
 
-#: stats/models.py:1230
+#: stats/models.py:1233
 msgid "Belgium"
 msgstr ""
 
-#: stats/models.py:1231
+#: stats/models.py:1234
 #, fuzzy
 #| msgid "Russian"
 msgid "Russia"
 msgstr "Русский"
 
-#: stats/models.py:1233
+#: stats/models.py:1236
 msgid "Austria-Hungary"
 msgstr ""
 
-#: stats/models.py:1621
+#: stats/models.py:1624
 msgctxt "award_type"
 msgid "tour"
 msgstr "тур"
 
-#: stats/models.py:1622
+#: stats/models.py:1625
 msgctxt "award_type"
 msgid "mission"
 msgstr "миссия"
 
-#: stats/models.py:1623
+#: stats/models.py:1626
 msgctxt "award_type"
 msgid "sortie"
 msgstr "вылет"
 
-#: stats/models.py:1624
+#: stats/models.py:1627
 msgctxt "award_type"
 msgid "vlife"
 msgstr ""
 
-#: stats/models.py:1626
+#: stats/models.py:1629
 msgid "function name"
 msgstr "имя функции"
 
-#: stats/models.py:1628
+#: stats/models.py:1631
 msgid "type"
 msgstr "тип"
 
-#: stats/models.py:1629
+#: stats/models.py:1632
 msgid "description"
 msgstr "описание"
 
-#: stats/models.py:1630
+#: stats/models.py:1633
 msgid "image"
 msgstr "картинка"
 
-#: stats/models.py:1631
+#: stats/models.py:1634
 msgid "Image size should be 180x180"
 msgstr "Размер изображения должен быть 180х180"
 
-#: stats/models.py:1635
+#: stats/models.py:1638
 msgid "award"
 msgstr "награда"
 
-#: stats/models.py:1636
+#: stats/models.py:1639
 msgid "awards"
 msgstr "награды"
 
-#: stats/models.py:1650
+#: stats/models.py:1653
 msgid "reward"
 msgstr ""
 
-#: stats/models.py:1651
+#: stats/models.py:1654
 msgid "rewards"
 msgstr ""
 
-#: stats/models.py:1670
+#: stats/models.py:1673
 msgid "player online"
 msgstr ""
 
-#: stats/models.py:1671
+#: stats/models.py:1674
 msgid "players online"
 msgstr ""
 
-#: stats/models.py:1703
+#: stats/models.py:1706
 #, fuzzy
 #| msgid "profiles"
 msgid "profiles_stats"
@@ -6507,11 +6606,6 @@ msgstr "Рейтинги"
 msgid "Squad Rankings"
 msgstr "Рейтинг сквадов"
 
-#: stats/templates/base.html:89 stats/templates/missions.html:3
-#: stats/templates/missions.html:14
-msgid "Missions"
-msgstr "Миссии"
-
 #: stats/templates/base.html:91
 msgid "Forum"
 msgstr "Форум"
@@ -6568,62 +6662,6 @@ msgstr "Статистика сквада"
 msgctxt "squad_nav_tab"
 msgid "Pilots"
 msgstr "Пилоты"
-
-#: stats/templates/mission.html:3 stats/templates/mission.html:13
-msgid "Mission"
-msgstr "Миссия"
-
-#: stats/templates/mission.html:19
-msgctxt "mission"
-msgid "Start Date"
-msgstr "Начало миссии"
-
-#: stats/templates/mission.html:20
-msgctxt "mission"
-msgid "End Date"
-msgstr "Окончание миссии"
-
-#: stats/templates/mission.html:21
-msgctxt "mission"
-msgid "Duration"
-msgstr "Продолжительность"
-
-#: stats/templates/mission.html:23 stats/templates/missions.html:38
-msgid "Winning coalition"
-msgstr "Победившая коалиция"
-
-#: stats/templates/mission.html:25 stats/templates/missions.html:69
-#: stats/templates/missions.html:70
-msgid "Performed the task of the mission"
-msgstr "Выполнены задачи миссии"
-
-#: stats/templates/mission.html:27 stats/templates/missions.html:74
-#: stats/templates/missions.html:75
-msgid "Won by score"
-msgstr "Победа по очкам"
-
-#: stats/templates/mission.html:30 stats/templates/missions.html:32
-msgid "Pilots total"
-msgstr "Всего пилотов"
-
-#: stats/templates/mission.html:169 stats/templates/pilot_sorties.html:41
-#: stats/templates/pilot_vlife.html:79 stats/templates/pilot_vlifes.html:43
-msgid "Score"
-msgstr "Очки"
-
-#: stats/templates/mission.html:215
-msgid "on the score"
-msgstr "по очкам"
-
-#: stats/templates/missions.html:19
-msgid "Search mission"
-msgstr "Найти миссию"
-
-#: stats/templates/missions.html:44 stats/templates/missions.html:45
-#: stats/templates/pilot_sorties.html:28 stats/templates/pilot_sorties.html:29
-#: stats/templates/pilot_vlifes.html:30 stats/templates/pilot_vlifes.html:31
-msgid "Duration (hours:minutes)"
-msgstr "Продолжительность (часы:минуты)"
 
 #: stats/templates/online.html:13
 msgid "Pilots on the server"

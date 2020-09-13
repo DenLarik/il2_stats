@@ -278,6 +278,9 @@ class Mission(models.Model):
     WIN_REASONS = (
         ('score', 'score'),
         ('task', 'task'),
+        ('task1', 'task1'),
+        ('task2', 'task2'),
+        ('task3', 'task3'),
     )
     win_reason = models.CharField(choices=WIN_REASONS, max_length=8, blank=True)
 

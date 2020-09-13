@@ -200,7 +200,14 @@ def stats_whore(m_report_file):
     )
     if m_report.winning_coal_id:
         mission.winning_coalition = m_report.winning_coal_id
-        mission.win_reason = 'task'
+        if m_report.winning_coal_type == 0:
+            mission.win_reason = 'task'
+        elif m_report.winning_coal_type == 1:
+            mission.win_reason = 'task1'
+        elif m_report.winning_coal_type == 2:
+            mission.win_reason = 'task2'
+        elif m_report.winning_coal_type == 3:
+            mission.win_reason = 'task3'
         mission.save()
 
     # собираем/создаем профили игроков и сквадов
