@@ -11,7 +11,7 @@ django-modeltranslation==0.13.3
 django==1.11.29
 filelock==3.0.12
 pillow==7.2.0
-psycopg2-binary==2.8.5
+psycopg2==2.8.6
 pycparser==2.20           # via cffi
 pytz==2020.1
 six==1.15.0
@@ -21,5 +21,5 @@ waitress==1.4.4
 wheel==0.35.1
 
 # The following packages are considered to be unsafe in a requirements file:
-# pip==19.3.1
-# setuptools==41.4.0
+# pip
+# setuptools

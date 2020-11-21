@@ -184,7 +184,7 @@ def pilot_awards(request, profile_id, nickname=None):
         return render(request, 'pilot_hide.html', {'player': player})
 
     if player.coal_pref != 0:
-        rewards = Reward.objects.select_related('award').filter(player_id=player.id).order_by('award_id')
+        rewards = Reward.objects.select_related('award').filter(player_id=player.id).order_by('award__order', '-date')
     else:
         rewards = ()
 

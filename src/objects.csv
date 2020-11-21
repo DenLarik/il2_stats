@@ -147,6 +147,7 @@ aircraft_light,Bf 109 G-14,1,,
 aircraft_light,Bf 109 G-2,1,,
 aircraft_light,Bf 109 G-4,1,,
 aircraft_light,Bf 109 G-6,1,,
+aircraft_light,Bf 109 G-6 Late,1,,
 aircraft_light,Bf 109 K-4,1,,
 aircraft_light,Fokker D.VII,1,,
 aircraft_light,Fokker D.VIIF,1,,
@@ -155,6 +156,7 @@ aircraft_light,Fw 190 A-3,1,,
 aircraft_light,Fw 190 A-5,1,,
 aircraft_light,Fw 190 A-8,1,,
 aircraft_light,Fw 190 D-9,1,,
+aircraft_light,Hurricane Mk.II,1,,
 aircraft_light,I-16 type 24,1,I-16 Type 24,И-16 тип 24
 aircraft_light,La-5 ser.8,1,La-5 (series 8),Ла-5 8-й серии
 aircraft_light,La-5FN ser.2,1,La-5FN (series 2),Ла-5ФН 2-й серии
@@ -211,6 +213,12 @@ aircraft_pilot,BotPilot_Bf109_GER41,1,pilot,пилот
 aircraft_pilot,BotPilot_Bf109_GER41wi,1,pilot,пилот
 aircraft_pilot,BotPilot_Bf109_GER44,1,pilot,пилот
 aircraft_pilot,BotPilot_Bf109K,1,pilot,пилот
+aircraft_pilot,BotPilot_C47A_RAF43,0,pilot,пилот
+aircraft_pilot,BotPilot_C47A_RUS41,0,pilot,пилот
+aircraft_pilot,BotPilot_C47A_RUS42,0,pilot,пилот
+aircraft_pilot,BotPilot_C47A_RUS43,0,pilot,пилот
+aircraft_pilot,BotPilot_C47A_RUSwi,0,pilot,пилот
+aircraft_pilot,BotPilot_C47A_USA43,0,pilot,пилот
 aircraft_pilot,BotPilot_FokkerDr1,1,pilot,пилот
 aircraft_pilot,BotPilot_FokkerDr1_GER17,1,pilot,пилот
 aircraft_pilot,BotPilot_FW190,1,pilot,пилот
@@ -241,6 +249,7 @@ aircraft_pilot,BotPilot_LaGG3_USA43,1,pilot,пилот
 aircraft_pilot,BotPilot_Me262,1,pilot,пилот
 aircraft_pilot,BotPilot_Me262_GER44,1,pilot,пилот
 aircraft_pilot,BotPilot_P38,1,pilot,пилот
+aircraft_pilot,BotPilot_P38_USA43,1,pilot,пилот
 aircraft_pilot,BotPilot_P38_USA44,1,pilot,пилот
 aircraft_pilot,BotPilot_P39,1,pilot,пилот
 aircraft_pilot,BotPilot_P39_RUSwi,1,pilot,пилот
@@ -248,6 +257,7 @@ aircraft_pilot,BotPilot_P47,1,pilot,пилот
 aircraft_pilot,BotPilot_P47_RAF,1,pilot,пилот
 aircraft_pilot,BotPilot_P47_RAF43,1,pilot,пилот
 aircraft_pilot,BotPilot_P47_RUS43,1,pilot,пилот
+aircraft_pilot,BotPilot_P47_USA43,1,pilot,пилот
 aircraft_pilot,BotPilot_P47_USA44,1,pilot,пилот
 aircraft_pilot,BotPilot_Pe2,1,pilot,пилот
 aircraft_pilot,BotPilot_Pe2_RUSwi,1,pilot,пилот
@@ -278,6 +288,12 @@ aircraft_pilot,BotPilotNPC_B25D_RUS42,1,pilot,пилот
 aircraft_pilot,BotPilotNPC_B25D_RUS43,1,pilot,пилот
 aircraft_pilot,BotPilotNPC_B25D_RUSwi,1,pilot,пилот
 aircraft_pilot,BotPilotNPC_B25D_USA43,1,pilot,пилот
+aircraft_pilot,BotPilotNPC_C47A_RAF43,0,pilot,пилот
+aircraft_pilot,BotPilotNPC_C47A_RUS41,0,pilot,пилот
+aircraft_pilot,BotPilotNPC_C47A_RUS42,0,pilot,пилот
+aircraft_pilot,BotPilotNPC_C47A_RUS43,0,pilot,пилот
+aircraft_pilot,BotPilotNPC_C47A_RUSwi,0,pilot,пилот
+aircraft_pilot,BotPilotNPC_C47A_USA43,0,pilot,пилот
 aircraft_pilot,BotPilotNPC_Fra,0,pilot,пилот
 aircraft_pilot,BotPilotNPC_Ger,0,pilot,пилот
 aircraft_pilot,BotPilotNPC_Ju52,0,pilot,пилот
@@ -290,6 +306,12 @@ aircraft_pilot,BotPilotNPC_U2_RUS41,0,pilot,пилот
 aircraft_pilot,BotPilotNPC_U2_RUS42,0,pilot,пилот
 aircraft_pilot,BotPilotNPC_U2_RUS43,0,pilot,пилот
 aircraft_pilot,BotPilotNPC_U2_RUSwi,1,pilot,пилот
+aircraft_pilot,BotPilotNPC2_C47A_RAF43,0,pilot,пилот
+aircraft_pilot,BotPilotNPC2_C47A_RUS41,0,pilot,пилот
+aircraft_pilot,BotPilotNPC2_C47A_RUS42,0,pilot,пилот
+aircraft_pilot,BotPilotNPC2_C47A_RUS43,0,pilot,пилот
+aircraft_pilot,BotPilotNPC2_C47A_RUSwi,0,pilot,пилот
+aircraft_pilot,BotPilotNPC2_C47A_USA43,0,pilot,пилот
 aircraft_pilot,BotPilotNPC2_Ju52,0,pilot,пилот
 aircraft_pilot,BotPilotNPC2_Ju52_GER41,1,pilot,пилот
 aircraft_static,static_A20B,0,parked aircraft,самолет на стоянке
@@ -341,6 +363,7 @@ aircraft_static,static_U2VS,0,parked aircraft,самолет на стоянке
 aircraft_static,static_Yak1,0,parked aircraft,самолет на стоянке
 aircraft_static,static_Yak1_net,0,parked aircraft,самолет на стоянке
 aircraft_static,static_Yak1_open,0,parked aircraft,самолет на стоянке
+aircraft_transport,C-47A,0,,
 aircraft_transport,Ju 52 3mg4e,1,,
 aircraft_turret,aircraft_turret,1,,
 aircraft_turret,Turret_A20B_1,1,A-20B turret,турель A-20B
@@ -715,6 +738,10 @@ explosion,HE_037mm_825g_50g_building,0,,
 explosion,HE_037mm_825g_50g_ground,0,,
 explosion,HE_037mm_825g_50g_object,0,,
 explosion,HE_037mm_825g_50g_water,0,,
+explosion,HE_040mm_820g_71g_building,0,,
+explosion,HE_040mm_820g_71g_ground,0,,
+explosion,HE_040mm_820g_71g_object,0,,
+explosion,HE_040mm_820g_71g_water,0,,
 explosion,HE_045mm_1kg_360g_building,0,,
 explosion,HE_045mm_1kg_360g_ground,0,,
 explosion,HE_045mm_1kg_360g_internal,0,,
@@ -1447,6 +1474,7 @@ trash,_KV1S_T0_sight2,0,,
 trash,_M4A2_T0_sight1,0,,
 trash,_PzIII-M_T0_sight1,0,,
 trash,_PzIII-M_T2_sight1,0,,
+trash,_PzIII-M_visor,0,,
 trash,_PzIV-G_T0_sight1,0,,
 trash,_PzV-D_T0_sight1,0,,
 trash,_PzVI-H1_T0_sight1,0,,
@@ -1532,6 +1560,8 @@ trash,BotInputController0,0,,
 trash,BotRangefinder,0,,
 trash,bridge_section_dmg,0,,
 trash,BulletEffect,0,,
+trash,C47A_P2,0,,
+trash,C47A_P3,0,,
 trash,CAeroplaneFragment,0,,
 trash,CAerostat,0,,
 trash,CAerostatAI,0,,
