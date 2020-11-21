@@ -11,7 +11,7 @@ django-modeltranslation==0.13.3
 django==1.11.29
 filelock==3.0.12
 pillow==7.2.0
-psycopg2==2.8.6
+psycopg2-binary==2.8.6
 pycparser==2.20           # via cffi
 pytz==2020.1
 six==1.15.0
