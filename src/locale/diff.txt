@@ -1,0 +1,101 @@
+msgid "current mission"
+msgstr "текущая миссия"
+
+msgid "time left"
+msgstr "осталось"
+
+msgid "Won by planes"
+msgstr "Победа по самолетам"
+
+msgid "Secret task performed"
+msgstr "Выполненая скрытая миссия"
+
+msgid "Performed the task of the mission3"
+msgstr "Выполнены задачи миссии"
+
+msgid "Rank"
+msgstr "Звание"
+
+msgid "by rating"
+msgstr "по рейтингу"
+
+msgid "by rank"
+msgstr "по званию"
+```````````````````````````````````````
+de
+
+msgid "current mission"
+msgstr "aktuelle Mission"
+
+msgid "time left"
+msgstr "verbleibende Zeit"
+
+msgid "Won by planes"
+msgstr "Von Flugzeugen gewonnen"
+
+msgid "Secret task performed"
+msgstr "Geheime Aufgabe ausgeführt"
+
+msgid "Performed the task of the mission3"
+msgstr "Hat die Aufgabe der Mission ausgeführt"
+
+msgid "Rank"
+msgstr "Rang"
+
+msgid "by rating"
+msgstr "nach Bewertung"
+
+msgid "by rank"
+msgstr "nach Rang"
+```````````````````````````````````````````````````````
+es
+
+msgid "current mission"
+msgstr "misión actual"
+
+msgid "time left"
+msgstr "izquierda"
+
+msgid "Won by planes"
+msgstr "Ganado por aviones"
+
+msgid "Secret task performed"
+msgstr "Tarea secreta realizada"
+
+msgid "Performed the task of the mission3"
+msgstr "Realizó la tarea de la misión"
+
+msgid "Rank"
+msgstr "Rango"
+
+msgid "by rating"
+msgstr "por calificación"
+
+msgid "by rank"
+msgstr "por rango"
+`````````````````````````````````````````````
+fr
+
+msgid "current mission"
+msgstr "mission actuelle"
+
+msgid "time left"
+msgstr "temps restant"
+
+msgid "Won by planes"
+msgstr "Gagné par les avions"
+
+msgid "Secret task performed"
+msgstr "Tâche secrète effectuée"
+
+msgid "Performed the task of the mission3"
+msgstr "A effectué la tâche de la mission"
+
+msgid "Rank"
+msgstr "Rang"
+
+msgid "by rating"
+msgstr "par note"
+
+msgid "by rank"
+msgstr "par rang"
